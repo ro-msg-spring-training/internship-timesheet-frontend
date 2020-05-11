@@ -10,20 +10,12 @@
 			"version": "1.0.0"
 		}
 	},
-	"sap.ui": {
-	"technology": "UI5",
-	"deviceTypes": {
-		"desktop": true,
-		"tablet": true,
-		"phone": true
-	}
-  },
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "sap.ui.demo.fiori2.view.App",
+			"viewName": "sap.ui.demo.fiori2.view.MasterDetail",
 			"type": "XML",
 			"async": true,
-			"id": "app"
+			"id": "fcl"
 		},
 		"dependencies": {
 			"minUI5Version": "1.60.0",
@@ -33,37 +25,6 @@
 				"sap.f": {}
 			}
 		},
-		"models": {
-			"i18n": {
-				"type": "sap.ui.model.resource.ResourceModel",
-				"settings": {
-					"bundleName": "sap.ui.demo.fiori2.i18n.i18n"
-				}
-			}
-		},
-		"routing": {
-			"config": {
-				"routerClass": "sap.f.routing.Router",
-				"viewType": "XML",
-				"viewPath": "sap.ui.demo.fiori2.view",
-				"controlId": "app",
-				"controlAggregation": "pages",
-				"async": true
-			},
-			"routes": [
-				{
-					"pattern": "",
-					"name": "login",
-					"target": "login"
-				}
-			],
-			"targets": {
-				"login": {
-					"viewName": "Login",
-					"viewLevel": 1,
-					"viewId": "login"
-				}
-			}
 		"config": {
 			"fullWidth": true
 		}
