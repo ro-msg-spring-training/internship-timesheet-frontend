@@ -1,0 +1,12 @@
+<mvc:View
+	controllerName="exercise.ExerciseUI5.controller.App"
+	displayBlock="true"
+	height="100%"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Shell>
+		<App id="app">
+		</App>
+	</Shell>
+</mvc:View>
