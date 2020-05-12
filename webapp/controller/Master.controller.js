@@ -27,7 +27,31 @@ sap.ui.define([
 			});
 
 			this.oView.setModel(oModel, "users");
-		}
+			
+			this._bDescendingSort = false;
+			this.oProductsTable = this.oView.byId("usersTable");
+		},
+		onSearch: function (oEvent) {
+			var oTableSearchState = [],
+				sQuery = oEvent.getParameter("query");
+			
+			if (sQuery && sQuery.length > 0) {
+				oTableSearchState.push(new Filter("lastName", FilterOperator.Contains, sQuery));
+			}
+			var oTable = this.byId("usersTable");
+			var oBinding = oTable.getBinding("items");
 
+			oBinding.filter(oTableSearchState);
+		},
+		onSort: function () {
+			this._bDescendingSort = !this._bDescendingSort;
+			var oBinding = this.oProductsTable.getBinding("items"),
+				oSorter = new Sorter("lastName", this._bDescendingSort);
+
+			oBinding.sort(oSorter);
+		},
+		onSynchronize: function(oEvent) {
+          this.onInit();
+        }
 	});
 });
