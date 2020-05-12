@@ -5,8 +5,9 @@ sap.ui.define([
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	'sap/ui/model/Sorter',
-	'sap/m/MessageBox'
-], function (Constants, JSONModel, Controller, Filter, FilterOperator, Sorter, MessageBox) {
+	'sap/m/MessageBox',
+	'sap/f/library'
+], function (Constants, JSONModel, Controller, Filter, FilterOperator, Sorter, MessageBox, fioriLibrary) {
 	"use strict";
 
 	return Controller.extend("sap.ui.demo.fiori2.controller.Master", {
@@ -30,7 +31,10 @@ sap.ui.define([
 			
 			this._bDescendingSort = false;
 			this.oProductsTable = this.oView.byId("usersTable");
+			
+			this.oRouter = this.getOwnerComponent().getRouter();
 		},
+		
 		onSearch: function (oEvent) {
 			var oTableSearchState = [],
 				sQuery = oEvent.getParameter("query");
@@ -43,15 +47,24 @@ sap.ui.define([
 
 			oBinding.filter(oTableSearchState);
 		},
+		
 		onSort: function () {
 			this._bDescendingSort = !this._bDescendingSort;
 			var oBinding = this.oProductsTable.getBinding("items"),
-				oSorter = new Sorter("lastName", this._bDescendingSort);
+				oSorter = new Sorter("programName", this._bDescendingSort);
 
 			oBinding.sort(oSorter);
 		},
+		
 		onSynchronize: function(oEvent) {
           this.onInit();
+        },
+        
+        onPressed: function(oEvent) {
+			var userPath = oEvent.getSource().getBindingContext("users").getPath(),
+				user = userPath.split("/").slice(-1).pop();
+				
+			this.oRouter.navTo("detail", {layout: fioriLibrary.LayoutType.TwoColumnsMidExpanded, user: user});	
         }
 	});
 });

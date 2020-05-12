@@ -28,7 +28,7 @@
 					items="{
 						path: 'users>/modelData',
 						sorter: {
-							path: 'lastName'
+							path: 'programName'
 						}
 					}"
 					class="sapFDynamicPageAlignContent"
@@ -38,7 +38,7 @@
 						</Column>
 					</columns>
 					<items>
-						<ColumnListItem type="Navigation">
+						<ColumnListItem type="Navigation" press=".onPressed">
 							<cells>
 								<ObjectIdentifier title="{users>firstName} {users>lastName}" text="{users>programName}"/>
 							</cells>
