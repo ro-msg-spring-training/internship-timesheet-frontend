@@ -1,5 +1,5 @@
 <mvc:View controllerName="sap.ui.demo.fiori2.controller.CreateBookingDetail" xmlns="sap.ui.table" xmlns:mvc="sap.ui.core.mvc"
-	xmlns:u="sap.ui.unified" xmlns:c="sap.ui.core" xmlns:m="sap.m" xmlns:form="sap.ui.layout.form" height="100%">
+	xmlns:u="sap.ui.unified" xmlns:c="sap.ui.core" xmlns:m="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" height="100%">
 	<m:Page showHeader="false" enableScrolling="false" class="sapUiContentPadding">
 		<m:content>
 			<m:OverflowToolbar class="sapFDynamicPageAlignContent">
@@ -8,15 +8,19 @@
 			<form:SimpleForm minWidth="1024" maxContainerCols="2" layout="ResponsiveLayout" editable="true" visible="true">
 				<form:content>
 					<m:Label text="Date"/>
-					<m:DatePicker dateValue="" placeholder="MMM d. y" id="datade" width="60%"/>
-					<m:Label text="Start-End"/>
-					<m:DatePicker dateValue=""  placeholder="MMM d. y - MMM d. y" width="60%"/>
+					<m:DatePicker dateValue="" change="handleChange" placeholder="MMM d. y" id="datade" width="60%"/>
+					<m:Label text="Start"/>
+					<m:TimePicker id="TP1" value="" valueFormat="HH:mm" displayFormat="HH:mm" change="handleChange" placeholder="HH:mm" width="60%"/>
+					<m:Label text="End"/>
+					<m:TimePicker id="TP2" value="" valueFormat="HH:mm" displayFormat="HH:mm" change="handleChange" placeholder="HH:mm" width="60%"/>
 					<m:Label text="Hours"/>
-					<m:Input value="{Erdat}"  width="60%" enabled="false"/>
+					<m:Input value="{Erdat}" change="handleChange" width="60%" enabled="false"/>
 					<m:Label text="PSP"/>
-					<m:Input value="{Erdat}"  width="60%"/>
+					<m:ComboBox items="{ path: 'psps>/pspsData' }" width="60%">
+						<core:Item key="{psps>pspId}" text="{psps>pspName}" enabled="true"/>
+					</m:ComboBox>
 					<m:Label text="Description"/>
-					<m:Input value="{Erdat}"  width="60%"/>
+					<m:Input value="{Erdat}" change="handleChange" width="60%"/>
 				</form:content>
 			</form:SimpleForm>
 		</m:content>

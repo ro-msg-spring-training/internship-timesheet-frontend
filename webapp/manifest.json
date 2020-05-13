@@ -58,13 +58,20 @@
 					]
 				},
 				{
-					"pattern": "detail/{user}/{layout}",
+					"pattern": "detail/{user}/{layout}/{programName}",
 					"name": "detail",
 					"target": [
 						"master",
 						"detail"
 					]
-				}
+				},
+				{ 
+					"pattern": "createBookingDetail/{user}/{layout}/{programName}",
+					"name": "createBookingDetail",
+					"target": [
+						"master",
+						"createBookingDetail"
+					]}
 			],
 			"targets": {
 				"master": {
@@ -77,8 +84,6 @@
 				},
 				"createBookingDetail": {
 					"viewName": "CreateBookingDetail",
-					"viewId": "createBookingDetail",
-					"viewLevel": 1,
 					"controlAggregation": "midColumnPages"
 				}
 			}

@@ -40,7 +40,7 @@
 					<items>
 						<ColumnListItem type="Navigation" press=".onPressed">
 							<cells>
-								<ObjectIdentifier title="{users>firstName} {users>lastName}" text="{users>programName}"/>
+								<ObjectIdentifier id="user" title="{users>firstName} {users>lastName}" text="{users>programName}"/>
 							</cells>
 						</ColumnListItem>
 					</items>
