@@ -1,37 +1,62 @@
-<mvc:View controllerName="sap.ui.demo.fiori2.controller.Detail" 
-xmlns="sap.ui.table" xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified" xmlns:c="sap.ui.core" xmlns:m="sap.m" height="100%">
+<mvc:View 
+	controllerName="sap.ui.demo.fiori2.controller.Detail" 
+	xmlns="sap.ui.table" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:u="sap.ui.unified"
+	xmlns:c="sap.ui.core" 
+	xmlns:m="sap.m" 
+	height="100%">
 	<m:Page showHeader="false" enableScrolling="false" class="sapUiContentPadding">
 		<m:content>
-				<Table id="bookingsTable" rows="{bookings>/bookingData}" selectionMode="MultiToggle" visibleRowCount="7" paste="onPaste"
-				ariaLabelledBy="title">
-				<extension>
-					<m:OverflowToolbar class="sapFDynamicPageAlignContent">
-						<m:Title id="title" text="Bookings"/>
-						<m:Button text="Create" type="Transparent" press="onCreate" class="sapUiLargeMarginBegin"/>
-						<m:Button text="Delete" type="Transparent" press="onDelete"/>
-					</m:OverflowToolbar>
-				</extension>
+			<TreeTable 
+				   id="bookingsTable" 
+            	   rows="{bookings>/bookingData}"
+                   selectionMode="MultiToggle"
+                   enableSelectAll="false"
+                   ariaLabelledBy="title">
+				<toolbar>
+					<m:Toolbar>
+						<m:Title id="title2" text="Bookings"></m:Title>
+						<m:ToolbarSpacer/>
+						<m:Button id="editButton4" text="Edit" type="Transparent" press="onMakeEditable"/>
+						<m:Button id="editButton3" text="Save" type="Transparent" press="onEdit"/>
+						<m:Button id="createButton" text="Create" type="Transparent" press="onCreate"/>
+						<m:Button id="deleteButton" text="Delete" type="Transparent" press="onDelete"/>
+					</m:Toolbar>
+				</toolbar>
 				<columns>
-					<Column width="11rem">
-						<m:Label text="Day"/>
+					<Column label="Day">
 						<template>
-							<m:Text text="{bookings>day}" wrapping="false"/>
+							<m:Input value="{bookings>day}" enabled="false"/>
 						</template>
 					</Column>
-					<Column width="11rem">
-						<m:Label text="Start Hour"/>
+					<Column label="Start Hour">
 						<template>
-							<m:Input value="{bookings>startHour}"/>
+							<m:Input value="{bookings>startHour}" enabled="false"/>
 						</template>
 					</Column>
-					<Column width="11rem">
-						<m:Label text="End Hour"/>
+					<Column label="End Hour">
 						<template>
-							<m:Input value="{bookings>endHour}"/>
+							<m:Input value="{bookings>endHour}" enabled="false"/>
+						</template>
+					</Column>
+					<Column label="Hours">
+						<template>
+							<m:Input value="{bookings>hours}" enabled="false"/>
+						</template>
+					</Column>
+					<Column label="PSP">
+						<template>
+							<m:Input value="{bookings>pspName}" enabled="false"/>
+						</template>
+					</Column>
+					<Column label="Details">
+						<template>
+							<m:Input value="{bookings>description}" enabled="false"/>
 						</template>
 					</Column>
 				</columns>
-			</Table>
+			</TreeTable>
 		</m:content>
 	</m:Page>
 </mvc:View>

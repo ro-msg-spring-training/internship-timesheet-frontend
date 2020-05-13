@@ -5,34 +5,39 @@ sap.ui.define([
 	"use strict";
 
 	return Controller.extend("sap.ui.demo.fiori2.controller.CreateBookingDetail", {
-		// onInit: function () {
-		// 	var oRouter = this.getRouter();
-		// 	//oRouter.getRoute("createBookingDetail").attachMatched(this._onRouteMatched, this);
-		// },
-		// _onRouteMatched : function (oEvent) {
-		// 	var oView;
+		onInit: function () {
+			var oOwnerComponent = this.getOwnerComponent();
 
-		// 	//oArgs = oEvent.getParameter("arguments");
-		// 	oView = this.getView();
-		// },
-		// 	oView.bindElement({
-		// 		// path : "/BookingDetail(" + oArgs.supplierId + ")",
-		// 		// events : {
-		// 		// 	change: this._onBindingChange.bind(this),
-		// 		// 	dataRequested: function (oEvent) {
-		// 		// 		oView.setBusy(true);
-		// 		// 	},
-		// 		// 	dataReceived: function (oEvent) {
-		// 		// 		oView.setBusy(false);
-		// 		// 	}
-		// 		// }
-		// 	});
-		// },
-		_onBindingChange : function (oEvent) {
-			// No data for the binding
-			if (!this.getView().getBindingContext()) {
-				this.getRouter().getTargets().display("notFound");
-			}
+			this.oRouter = oOwnerComponent.getRouter();
+			this.oModel = oOwnerComponent.getModel();
+
+			this.oRouter.getRoute("master").attachPatternMatched(this._onUserMatched, this);
+			this.oRouter.getRoute("createBookingDetail").attachPatternMatched(this._onUserMatched, this);
+		},
+		
+		_onUserMatched: function (oEvent) {
+			this._user = oEvent.getParameter("arguments").user || this._user || "0";
+			this._programName = oEvent.getParameter("arguments").programName || this._programName || "0";
+
+			this._getPsps();
+		},
+		
+		_getPsps: function(oEvent) {
+			this.oView = this.getView();
+			var oModel = new sap.ui.model.json.JSONModel();
+			
+			$.ajax({
+				type: "GET",
+				contentType: "application/json",
+				url: Constants.BASE_URL + Constants.PROGRAMS_PATH + "/" + this._programName + Constants.PSPS_PATH,                 
+				dataType: "json",
+				async: false, 
+				success: function (data, textStatus, jqXHR) {
+					oModel.setProperty("/pspsData", data);
+				}
+			}).done(function(data){console.log(data)});
+			
+			this.oView.setModel(oModel, "psps");
 		}
 	});
 });
