@@ -14,13 +14,13 @@ sap.ui.define([
 
 			this.oRouter.getRoute("master").attachPatternMatched(this._onUserMatched, this);
 			this.oRouter.getRoute("detail").attachPatternMatched(this._onUserMatched, this);
-			//this.oRouter.getRoute("createBookingDetail").attachPatternMatched(this._onUserMatched, this);
 			
 			this.oBookingsTable = this.oView.byId("bookingsTable");
 		},
 
 		_onUserMatched: function (oEvent) {
 			this._user = oEvent.getParameter("arguments").user || this._user || "0";
+			this._programName = oEvent.getParameter("arguments").programName || this._programName || "0";
 			
 			this._getBookingDetails();
 		},
@@ -44,8 +44,9 @@ sap.ui.define([
 			this.oView.setModel(oModel, "bookings");
 		},
 		
-		onCreate: function(){
-			this.getOwnerComponent().getTargets().display("createBookingDetail");
+		onCreate: function(oEvent){
+			this.oRouter.navTo("createBookingDetail", {layout: fioriLibrary.LayoutType.TwoColumnsMidExpanded, user: this._user, 
+			programName: this._programName});
 		}
 		
 	});

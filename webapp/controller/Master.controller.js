@@ -27,7 +27,7 @@ sap.ui.define([
 				}
 			});
 
-			this.oView.setModel(oModel, "users");
+			console.log(this.oView.setModel(oModel, "users"));
 			
 			this._bDescendingSort = false;
 			this.oProductsTable = this.oView.byId("usersTable");
@@ -63,8 +63,15 @@ sap.ui.define([
         onPressed: function(oEvent) {
 			var userPath = oEvent.getSource().getBindingContext("users").getPath(),
 				user = userPath.split("/").slice(-1).pop();
+			var programName;
+			var users = this.oView.getModel("users").getData().modelData;
+		    for(var i=0;i<users.length;i++){
+		    	if(users[i].id == user){
+		    		programName = users[i].programName;
+		    	}
+		    }
 				
-			this.oRouter.navTo("detail", {layout: fioriLibrary.LayoutType.TwoColumnsMidExpanded, user: user});	
+			this.oRouter.navTo("detail", {layout: fioriLibrary.LayoutType.TwoColumnsMidExpanded, user: user, programName: programName});	
         }
 	});
 });
