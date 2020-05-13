@@ -1,0 +1,24 @@
+<mvc:View controllerName="sap.ui.demo.fiori2.controller.CreateBookingDetail" xmlns="sap.ui.table" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:u="sap.ui.unified" xmlns:c="sap.ui.core" xmlns:m="sap.m" xmlns:form="sap.ui.layout.form" height="100%">
+	<m:Page showHeader="false" enableScrolling="false" class="sapUiContentPadding">
+		<m:content>
+			<m:OverflowToolbar class="sapFDynamicPageAlignContent">
+				<m:Title id="title" text="Create Booking"/>
+			</m:OverflowToolbar>
+			<form:SimpleForm minWidth="1024" maxContainerCols="2" layout="ResponsiveLayout" editable="true" visible="true">
+				<form:content>
+					<m:Label text="Date"/>
+					<m:DatePicker dateValue="" placeholder="MMM d. y" id="datade" width="60%"/>
+					<m:Label text="Start-End"/>
+					<m:DatePicker dateValue=""  placeholder="MMM d. y - MMM d. y" width="60%"/>
+					<m:Label text="Hours"/>
+					<m:Input value="{Erdat}"  width="60%" enabled="false"/>
+					<m:Label text="PSP"/>
+					<m:Input value="{Erdat}"  width="60%"/>
+					<m:Label text="Description"/>
+					<m:Input value="{Erdat}"  width="60%"/>
+				</form:content>
+			</form:SimpleForm>
+		</m:content>
+	</m:Page>
+</mvc:View>

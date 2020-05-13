@@ -1,49 +1,35 @@
-<mvc:View 
-	controllerName="sap.ui.demo.fiori2.controller.Detail" 
-	xmlns="sap.ui.table"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:u="sap.ui.unified"
-	xmlns:c="sap.ui.core"
-	xmlns:m="sap.m"
-    height="100%">
-	<m:Page
-		showHeader="false"
-		enableScrolling="false"
-		class="sapUiContentPadding">
+<mvc:View controllerName="sap.ui.demo.fiori2.controller.Detail" 
+xmlns="sap.ui.table" xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified" xmlns:c="sap.ui.core" xmlns:m="sap.m" height="100%">
+	<m:Page showHeader="false" enableScrolling="false" class="sapUiContentPadding">
 		<m:content>
-			<Table
-				id="bookingsTable"
-				rows="{bookings>/bookingData}"
-				selectionMode="MultiToggle"
-				visibleRowCount="7"
-				paste="onPaste"
+				<Table id="bookingsTable" rows="{bookings>/bookingData}" selectionMode="MultiToggle" visibleRowCount="7" paste="onPaste"
 				ariaLabelledBy="title">
 				<extension>
-					<m:OverflowToolbar>
-						<m:Title id="title" text="General info"/>
+					<m:OverflowToolbar class="sapFDynamicPageAlignContent">
+						<m:Title id="title" text="Bookings"/>
+						<m:Button text="Create" type="Transparent" press="onCreate" class="sapUiLargeMarginBegin"/>
+						<m:Button text="Delete" type="Transparent" press="onDelete"/>
 					</m:OverflowToolbar>
 				</extension>
 				<columns>
-					
 					<Column width="11rem">
-						<m:Label text="Day" />
+						<m:Label text="Day"/>
 						<template>
-							<m:Text text="{bookings>day}" wrapping="false" />
+							<m:Text text="{bookings>day}" wrapping="false"/>
 						</template>
 					</Column>
 					<Column width="11rem">
-						<m:Label text="Start Hour" />
+						<m:Label text="Start Hour"/>
 						<template>
 							<m:Input value="{bookings>startHour}"/>
 						</template>
 					</Column>
 					<Column width="11rem">
-						<m:Label text="End Hour" />
+						<m:Label text="End Hour"/>
 						<template>
 							<m:Input value="{bookings>endHour}"/>
 						</template>
 					</Column>
-				
 				</columns>
 			</Table>
 		</m:content>

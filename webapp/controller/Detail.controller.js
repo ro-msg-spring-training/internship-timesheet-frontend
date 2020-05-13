@@ -1,7 +1,8 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"../Constants"
-], function (Controller, Constants) {
+	"../Constants",
+	"sap/f/library"
+], function (Controller, Constants, fioriLibrary) {
 	"use strict";
 
 	return Controller.extend("sap.ui.demo.fiori2.controller.Detail", {
@@ -13,6 +14,7 @@ sap.ui.define([
 
 			this.oRouter.getRoute("master").attachPatternMatched(this._onUserMatched, this);
 			this.oRouter.getRoute("detail").attachPatternMatched(this._onUserMatched, this);
+			//this.oRouter.getRoute("createBookingDetail").attachPatternMatched(this._onUserMatched, this);
 			
 			this.oBookingsTable = this.oView.byId("bookingsTable");
 		},
@@ -40,6 +42,10 @@ sap.ui.define([
 			}).done(function(data){console.log(data)});
 			
 			this.oView.setModel(oModel, "bookings");
+		},
+		
+		onCreate: function(){
+			this.getOwnerComponent().getTargets().display("createBookingDetail");
 		}
 		
 	});
