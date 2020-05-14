@@ -27,32 +27,32 @@
 				<columns>
 					<Column label="Day">
 						<template>
-							<m:Input value="{bookings>day}" enabled="false"/>
+							<m:Input value="{bookings>day}" enabled="false" editable="true"/>
 						</template>
 					</Column>
 					<Column label="Start Hour">
 						<template>
-							<m:Input value="{bookings>startHour}" enabled="false"/>
+							<m:Input value="{bookings>startHour}" enabled="false" editable="true"/>
 						</template>
 					</Column>
 					<Column label="End Hour">
 						<template>
-							<m:Input value="{bookings>endHour}" enabled="false"/>
+							<m:Input value="{bookings>endHour}" enabled="false" editable="true"/>
 						</template>
 					</Column>
 					<Column label="Hours">
 						<template>
-							<m:Input value="{bookings>hours}" enabled="false"/>
+							<m:Input value="{bookings>hours}" enabled="false" editable="false"/>
 						</template>
 					</Column>
 					<Column label="PSP">
 						<template>
-							<m:Input value="{bookings>pspName}" enabled="false"/>
+							<m:Input value="{bookings>pspName}" enabled="false" editable="true"/>
 						</template>
 					</Column>
 					<Column label="Details">
 						<template>
-							<m:Input value="{bookings>description}" enabled="false"/>
+							<m:Input value="{bookings>description}" enabled="false" editable="true"/>
 						</template>
 					</Column>
 				</columns>

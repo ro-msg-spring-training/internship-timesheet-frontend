@@ -82,7 +82,45 @@ sap.ui.define([
 			var bookingDetailId = booking[bookingPos].bookingDetails[bookingDetailPos].id;
 			this._deleteBookingDetail(bookingDetailId);
 			this.onInit();
+		},
+		onMakeEditable: function (oEvent) {
+			var oTable = this.getView().byId("bookingsTable");
+			var selectedItem = oTable.getSelectedIndex();
+			
+			var iBookingDetailPos;
+			var iPos = 0;
+			for(var i = 0; i <= parseInt(selectedItem); i ++) {
+				iBookingDetailPos = oTable.getContextByIndex(selectedItem).getPath().split("/")[4];
+				iPos++;
+			}
+			
+			console.log(iPos);
+			
+			var aItems = oTable.getRows();
+			
+			console.log(aItems);
+
+			for(var i = 0; i < aItems.length; i ++) {
+				if(i == selectedItem) {
+					aItems[i].getCells()[0].setEnabled(true);
+					aItems[i].getCells()[1].setEnabled(true);
+					aItems[i].getCells()[2].setEnabled(true);
+					aItems[i].getCells()[4].setEnabled(true);
+					aItems[i].getCells()[5].setEnabled(true);
+					
+					console.log(aItems[i].getCells());
+				}
+				else {
+					aItems[i].getCells()[0].setEnabled(false);
+					aItems[i].getCells()[1].setEnabled(false);
+					aItems[i].getCells()[2].setEnabled(false);
+					aItems[i].getCells()[4].setEnabled(false);
+					aItems[i].getCells()[5].setEnabled(false);
+				}
+			}
+			
 		}
+
 
 	});
 });
