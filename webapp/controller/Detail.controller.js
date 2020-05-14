@@ -47,10 +47,17 @@ sap.ui.define([
 		},
 
 		onCreate: function (oEvent) {
-			this.oRouter.navTo("createBookingDetail", {
+			var oTable = this.byId("bookingsTable");
+			var seletctedItem = oTable.getSelectedIndex();
+			var bookingPos = oTable.getContextByIndex(seletctedItem).getPath().split("/")[2];
+			var booking = this.oView.getModel("bookings").getData().bookingData;
+			var bookingId = booking[bookingPos].bookingId;
+			console.log(bookingId);
+			 this.oRouter.navTo("createBookingDetail", {
 				layout: fioriLibrary.LayoutType.TwoColumnsMidExpanded,
 				user: this._user,
-				programName: this._programName
+				programName: this._programName,
+				bookingId: bookingId
 			});
 		},
 		_deleteBookingDetail: function (idBookingDetail) {
