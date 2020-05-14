@@ -31,7 +31,7 @@ sap.ui.define([
 			
 			$.ajax({
 				type: "GET",
-				contentType: "application/json",
+				contentType: false,
 				url: Constants.BASE_URL + Constants.PROGRAMS_PATH + "/" + this._programName + Constants.PSPS_PATH,                 
 				dataType: "json",
 				async: false, 
@@ -54,19 +54,21 @@ sap.ui.define([
 			var userId = this._user;
 			var bookingId = this._bookingId;
 			
+			var myformData = new FormData();      
+			myformData.append("startHour", startTime);
+			myformData.append("endHour", endTime); 
+			myformData.append("pspName", pspName);
+			myformData.append("date", date); 
+			myformData.append("bookingId", bookingId);
+			myformData.append("pspId", pspId);
+			myformData.append("userId", userId);
+			
 			$.ajax({
 				type: "POST",
-				contentType: "application/json",
-				url: Constants.BASE_URL + Constants.BOOKING_DETAIL_PATH,                 
-				dataType: "json",
-				data: JSON.stringify({ "description": description,
-					"startHour": startTime,
-					"endHour": endTime,
-					"pspName": pspName,
-					"date": date,
-					"bookingId": bookingId,
-					"pspId": pspId,
-					"userId": userId }),
+				processData: false,
+				contentType: false,
+				data: myformData,
+				url: Constants.BASE_URL + Constants.BOOKING_DETAIL_PATH,    
 				async: false, 
 				success: function (data, textStatus, jqXHR) {
 					history.go(-1);

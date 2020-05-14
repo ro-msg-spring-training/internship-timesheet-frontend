@@ -2,10 +2,10 @@
 	"_version": "1.12.0",
 	"sap.app": {
 		"id": "sap.ui.demo.fiori2",
-		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
+		"type": "application",
 		"applicationVersion": {
 			"version": "1.0.0"
 		}
@@ -17,44 +17,50 @@
 			"tablet": true,
 			"phone": true
 		}
-  	},
+	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "sap.ui.demo.fiori2.view.MasterDetail",
+			"viewName": "sap.ui.demo.fiori2.view.App",
 			"type": "XML",
 			"async": true,
-			"id": "fcl"
+			"id": "app"
 		},
 		"dependencies": {
 			"minUI5Version": "1.60.0",
 			"libs": {
 				"sap.ui.core": {},
 				"sap.m": {},
-				"sap.f": {},
-				"sap.uxap": {}
+				"sap.f": {}
 			}
 		},
-		"config": {
-			"fullWidth": true
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "sap.ui.demo.fiori2.i18n.i18n"
+				}
+			}
 		},
 		"routing": {
 			"config": {
 				"routerClass": "sap.f.routing.Router",
 				"viewType": "XML",
 				"viewPath": "sap.ui.demo.fiori2.view",
-				"controlId": "flexibleColumnLayout",
-				"transition": "slide",
-				"bypassed": {
-				},
+				"controlId": "app",
+				"controlAggregation": "pages",
 				"async": true
 			},
 			"routes": [
 				{
-					"pattern": ":layout:",
+					"pattern": "",
+					"name": "login",
+					"target": "login"
+				},
+				{
+					"pattern": "master",
 					"name": "master",
 					"target": [
-						"master",
-						"detail"
+						"master"
 					]
 				},
 				{
@@ -74,19 +80,24 @@
 					]}
 			],
 			"targets": {
+				"login": {
+					"viewName": "Login",
+					"viewLevel": 1,
+					"viewId": "login"
+				},
 				"master": {
-					"viewName": "Master",
-					"controlAggregation": "beginColumnPages"
+					"viewName": "Master"
 				},
 				"detail": {
-					"viewName": "Detail",
-					"controlAggregation": "midColumnPages"
+					"viewName": "Detail"
 				},
 				"createBookingDetail": {
-					"viewName": "CreateBookingDetail",
-					"controlAggregation": "midColumnPages"
+					"viewName": "CreateBookingDetail"
 				}
 			}
+		},
+		"config": {
+			"fullWidth": true
 		}
 	}
 }

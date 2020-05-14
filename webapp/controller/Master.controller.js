@@ -18,7 +18,7 @@ sap.ui.define([
 
 			$.ajax({
 				type: "GET",
-				contentType: "application/json",
+				contentType: false,
 				url: Constants.BASE_URL + Constants.USERS_PATH,                 
 				dataType: "json",
 				async: false, 

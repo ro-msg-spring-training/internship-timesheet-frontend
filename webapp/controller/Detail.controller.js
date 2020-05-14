@@ -34,7 +34,7 @@ sap.ui.define([
 
 			$.ajax({
 				type: "GET",
-				contentType: "application/json",
+				contentType: false,
 				url: Constants.BASE_URL + Constants.BOOKINGS_PATH + "/" + this._user,
 				dataType: "json",
 				async: false,
@@ -65,11 +65,16 @@ sap.ui.define([
 		_deleteBookingDetail: function (idBookingDetail) {
 			$.ajax({
 				type: "DELETE",
-				contentType: "application/json",
-				url: Constants.BASE_URL + Constants.BOOKING_DETAILS_PATH + "/" + idBookingDetail,
+				contentType: false,
+				url: Constants.BASE_URL + Constants.BOOKING_DETAIL_PATH + "/" + idBookingDetail,
 				dataType: "json",
 				async: false,
-				success: function (data, textStatus, jqXHR) {}
+				success: function (data, textStatus, jqXHR) {
+					console.log(data);
+				},
+				error: function (e,xhr,textStatus,err,data) {
+    				alert("da");
+				}
 			}).done(function (data) {});
 		},
 		onDelete: function (oEvent) {

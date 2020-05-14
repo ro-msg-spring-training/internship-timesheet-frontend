@@ -21,7 +21,6 @@ sap.ui.define([
 			oRouter = this.getRouter();
 			oRouter.attachBeforeRouteMatched(this._onBeforeRouteMatched, this);
 			oRouter.initialize();
-			
 		},
 		
 		_onBeforeRouteMatched: function(oEvent) {
