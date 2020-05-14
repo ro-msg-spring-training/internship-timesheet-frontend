@@ -50,18 +50,28 @@ sap.ui.define([
 
 		onCreate: function (oEvent) {
 			var oTable = this.byId("bookingsTable");
-			var seletctedItem = oTable.getSelectedIndex();
-			var bookingPos = oTable.getContextByIndex(seletctedItem).getPath().split("/")[2];
+			var selectedItem = oTable.getSelectedIndex();
+			if (selectedItem > 0)
+				var bookingPos = oTable.getContextByIndex(selectedItem).getPath().split("/")[2];
+
 			var booking = this.oView.getModel("bookings").getData().bookingData;
-			var bookingId = booking[bookingPos].bookingId;
-			console.log(bookingId);
+			var bookingDay;
+			if (bookingPos !== undefined){
+				bookingDay = booking[bookingPos].day;
+			}
+			else {
+				bookingDay = -1;
+			}
+				
 			this.oRouter.navTo("createBookingDetail", {
 				layout: fioriLibrary.LayoutType.TwoColumnsMidExpanded,
 				user: this._user,
 				programName: this._programName,
-				bookingId: bookingId
+				bookingDay: bookingDay
 			});
+		
 		},
+		
 		_deleteBookingDetail: function (idBookingDetail) {
 			$.ajax({
 				type: "DELETE",

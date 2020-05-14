@@ -17,33 +17,50 @@ sap.ui.define([
 			this.oRouter.getRoute("createBookingDetail").attachPatternMatched(this._onUserMatched, this);
 			this.oRouter.getRoute("detail").attachPatternMatched(this._onUserMatched, this);
 		},
-		
+
 		_onUserMatched: function (oEvent) {
 			this._user = oEvent.getParameter("arguments").user || this._user || "0";
 			this._programName = oEvent.getParameter("arguments").programName || this._programName || "0";
-			this._bookingId = oEvent.getParameter("arguments").bookingId || this._bookingId || "0";
+			this._bookingDay = oEvent.getParameter("arguments").bookingDay || "-1";
+			
+			
+			console.log(this._bookingDay);
+			if (this._bookingDay === "-1") {
+				this.getView().byId("datade").setEnabled(true);
+				this.getView().byId("datade").setValue("");
+			} else{
+				this.getView().byId("datade").setValue(this._bookingDay);
+				this.getView().byId("datade").setEnabled(false);
+			}
+			this.getView().byId("TP1").setValue("");
+			this.getView().byId("TP2").setValue("");
+			this.getView().byId("pspComboBox").setValue("");
+			this.getView().byId("description").setValue("");
+			
 			this._getPsps();
 		},
-		
-		_getPsps: function(oEvent) {
+
+		_getPsps: function (oEvent) {
 			this.oView = this.getView();
 			var oModel = new sap.ui.model.json.JSONModel();
-			
+
 			$.ajax({
 				type: "GET",
 				contentType: false,
-				url: Constants.BASE_URL + Constants.PROGRAMS_PATH + "/" + this._programName + Constants.PSPS_PATH,                 
+				url: Constants.BASE_URL + Constants.PROGRAMS_PATH + "/" + this._programName + Constants.PSPS_PATH,
 				dataType: "json",
-				async: false, 
+				async: false,
 				success: function (data, textStatus, jqXHR) {
 					oModel.setProperty("/pspsData", data);
 				}
-			}).done(function(data){console.log(data)});
-			
+			}).done(function (data) {
+				console.log(data)
+			});
+
 			this.oView.setModel(oModel, "psps");
 		},
-		
-		onCreate: function(){
+
+		onCreate: function () {
 			var date = this.getView().byId("datade").getValue();
 			var startTime = this.getView().byId("TP1").getValue();
 			var endTime = this.getView().byId("TP2").getValue();
@@ -52,24 +69,24 @@ sap.ui.define([
 			var hours = endTime - startTime;
 			var pspId = this.getView().byId("pspComboBox").getSelectedKey();
 			var userId = this._user;
-			var bookingId = this._bookingId;
-			
-			var myformData = new FormData();      
+
+
+			var myformData = new FormData();
 			myformData.append("startHour", startTime);
-			myformData.append("endHour", endTime); 
+			myformData.append("endHour", endTime);
 			myformData.append("pspName", pspName);
-			myformData.append("date", date); 
-			myformData.append("bookingId", bookingId);
+			myformData.append("date", date);
+			myformData.append("bookingId", -1);
 			myformData.append("pspId", pspId);
 			myformData.append("userId", userId);
-			
+
 			$.ajax({
 				type: "POST",
 				processData: false,
 				contentType: false,
 				data: myformData,
-				url: Constants.BASE_URL + Constants.BOOKING_DETAIL_PATH,    
-				async: false, 
+				url: Constants.BASE_URL + Constants.BOOKING_DETAIL_PATH,
+				async: false,
 				success: function (data, textStatus, jqXHR) {
 					history.go(-1);
 				}

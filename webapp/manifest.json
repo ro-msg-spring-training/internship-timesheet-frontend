@@ -72,7 +72,7 @@
 					]
 				},
 				{ 
-					"pattern": "createBookingDetail/{user}/{layout}/{programName}",
+					"pattern": "createBookingDetail/{user}/{layout}/{programName}/{bookingDay}",
 					"name": "createBookingDetail",
 					"target": [
 						"master",
