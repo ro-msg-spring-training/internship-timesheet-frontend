@@ -8,13 +8,13 @@
 			<form:SimpleForm minWidth="1024" maxContainerCols="2" layout="ResponsiveLayout" editable="true" visible="true">
 				<form:content>
 						<m:Label text="Date"/>
-						<m:DatePicker id="datade" value="" valueFormat="YYYY-MM-dd" displayFormat="YYYY-MM-dd" change="handleChange" placeholder="YYYY-MM-dd" width="60%"/>
+						<m:DatePicker id="datade" value="" valueFormat="YYYY-MM-dd" displayFormat="YYYY-MM-dd" placeholder="YYYY-MM-dd" width="60%"/>
 						<m:Label text="Start"/>
-						<m:TimePicker id="TP1" value="" valueFormat="HH:mm" displayFormat="HH:mm" change="handleChange" placeholder="HH:mm" width="60%"/>
+						<m:TimePicker id="TP1" value="" valueFormat="HH:mm" displayFormat="HH:mm" change="handleHourChange" minutesStep="30" valueState="None" placeholder="HH:mm" width="60%"/>
 						<m:Label text="End"/>
-						<m:TimePicker id="TP2" value="" valueFormat="HH:mm" displayFormat="HH:mm" change="handleChange" placeholder="HH:mm" width="60%"/>
+						<m:TimePicker id="TP2" value="" valueFormat="HH:mm" displayFormat="HH:mm" change="handleHourChange" minutesStep="30" valueState="None" placeholder="HH:mm" width="60%"/>
 						<m:Label text="Hours"/>
-						<m:Input id="hours" value="" change="handleChange" width="60%" enabled="false"/>
+						<m:Input id="hours" value="" width="60%" enabled="false"/>
 						<m:Label text="PSP"/>
 						<m:ComboBox id="pspComboBox" value="" items="{ path: 'psps>/pspsData' }" width="60%">
 							<core:Item key="{psps>pspId}" text="{psps>pspName}" enabled="true"/>
@@ -24,7 +24,7 @@
 				</form:content>
 			</form:SimpleForm>
 			<m:VBox alignItems="Center">
-				<m:Button id="createButton" text="Create" press="onCreate"/>
+				<m:Button id="createButton" text="Create" press="onCreate" enabled="false"/>
 			</m:VBox>
 		</m:content>
 	</m:Page>

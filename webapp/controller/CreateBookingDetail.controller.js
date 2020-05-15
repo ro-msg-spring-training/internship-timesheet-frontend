@@ -59,14 +59,56 @@ sap.ui.define([
 
 			this.oView.setModel(oModel, "psps");
 		},
-
+		
+		handleHourChange: function () {
+			var startTime = this.getView().byId("TP1").getValue();
+			var endTime = this.getView().byId("TP2").getValue();
+			if(startTime !== "" && endTime !== "") {
+				this.getView().byId("TP1").setValueState("None");
+				this.getView().byId("TP2").setValueState("None");
+				var startData = startTime.split(":");
+				var endData = endTime.split(":");
+				var hours = parseInt(endData[0]) - parseInt(startData[0]);
+				var minutes = parseInt(endData[1]) - parseInt(startData[1]);
+				if(minutes < 0){
+					hours = hours - 1;
+					minutes += 60;
+				}
+				if(!isNaN(hours) && !isNaN(minutes)){
+					if(hours < 0) {
+						this.getView().byId("TP1").setValueState("Error");
+						this.getView().byId("TP1").setValueStateText("Start hour greater than end hour");
+						this.getView().byId("TP2").setValueState("Error");
+						this.getView().byId("TP2").setValueStateText("Start hour greater than end hour");
+						this.getView().byId("hours").setValue(" ");
+						this.getView().byId("createButton").setEnabled(false);
+					} else {
+						this.getView().byId("createButton").setEnabled(true);
+						if(minutes < 10) {
+							this.getView().byId("hours").setValue(hours +":0"+minutes);
+						} else {
+							this.getView().byId("hours").setValue(hours +":"+minutes);
+						}
+					}
+					
+				}
+			} else {
+				this.getView().byId("createButton").setEnabled(false);
+				if(startTime.length < 1)this.getView().byId("TP1").setValueState("Error");
+				this.getView().byId("TP1").setValueStateText("Invalid entry");
+				if(endTime.length < 1)this.getView().byId("TP2").setValueState("Error");
+				this.getView().byId("TP2").setValueStateText("Invalid entry");
+				this.getView().byId("hours").setValue(" ");
+			}
+		},
+		
 		onCreate: function () {
 			var date = this.getView().byId("datade").getValue();
 			var startTime = this.getView().byId("TP1").getValue();
 			var endTime = this.getView().byId("TP2").getValue();
 			var pspName = this.getView().byId("pspComboBox").getValue();
 			var description = this.getView().byId("description").getValue();
-			var hours = endTime - startTime;
+			var hours = this.getView().byId("hours").getValue();
 			var pspId = this.getView().byId("pspComboBox").getSelectedKey();
 			var userId = this._user;
 
@@ -79,6 +121,7 @@ sap.ui.define([
 			myformData.append("bookingId", -1);
 			myformData.append("pspId", pspId);
 			myformData.append("userId", userId);
+			myformData.append("description", description);
 
 			$.ajax({
 				type: "POST",
