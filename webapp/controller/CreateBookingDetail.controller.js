@@ -2,8 +2,9 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"../Constants",
 	'sap/f/library',
+	"sap/m/MessageToast",
 	"sap/ui/core/routing/History"
-], function (Controller, Constants, fioriLibrary, History) {
+], function (Controller, Constants, fioriLibrary, MessageToast, History) {
 	"use strict";
 
 	return Controller.extend("sap.ui.demo.fiori2.controller.CreateBookingDetail", {
@@ -130,6 +131,9 @@ sap.ui.define([
 				async: false,
 				success: function (data, textStatus, jqXHR) {
 					history.go(-1);
+				},
+    			error: function (e,xhr,textStatus,err,data) {
+    				MessageToast.show("Hours overlap with another booking detail!");
 				}
 			});
 		}
