@@ -27,7 +27,7 @@ sap.ui.define([
 				}
 			});
 
-			console.log(this.oView.setModel(oModel, "users"));
+			this.oView.setModel(oModel, "users");
 			
 			this._bDescendingSort = false;
 			this.oProductsTable = this.oView.byId("usersTable");

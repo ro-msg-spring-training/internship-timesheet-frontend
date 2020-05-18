@@ -24,7 +24,6 @@ sap.ui.define([
 			this._bookingDay = oEvent.getParameter("arguments").bookingDay || "-1";
 			
 			
-			console.log(this._bookingDay);
 			if (this._bookingDay === "-1") {
 				this.getView().byId("datade").setEnabled(true);
 				this.getView().byId("datade").setValue("");
@@ -54,7 +53,6 @@ sap.ui.define([
 					oModel.setProperty("/pspsData", data);
 				}
 			}).done(function (data) {
-				console.log(data)
 			});
 
 			this.oView.setModel(oModel, "psps");

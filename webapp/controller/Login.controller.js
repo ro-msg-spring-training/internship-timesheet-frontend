@@ -32,14 +32,10 @@ sap.ui.define([
     			method: 'post',
 				processData: false,
     			contentType: false,
-    			//cache: false,
-    			//crossDomain: true,
     			data: myformData,
-    			//enctype: 'multipart/form-data',
 				url: Constants.BASE_URL + Constants.LOGIN_PATH,  
     			success: function (response) {
 					oRouter.navTo("masterDetail", true);
-        			//alert("ok");
     			},
     			error: function (e,xhr,textStatus,err,data) {
     				MessageToast.show("Invalid username or password");

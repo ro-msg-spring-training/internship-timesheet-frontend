@@ -42,7 +42,6 @@ sap.ui.define([
 					oModel.setProperty("/bookingData", data);
 				}
 			}).done(function (data) {
-				console.log(data)
 			});
 
 			this.oView.setModel(oModel, "bookings");
@@ -80,7 +79,9 @@ sap.ui.define([
 				dataType: "json",
 				async: false,
 				success: function (data, textStatus, jqXHR) {}
-			}).done(function (data) {});
+			}).done(function (data) {
+				this._getBookingDetails();
+			}.bind(this));
 		},
 		onDelete: function (oEvent) {
 			var oTable = this.byId("bookingsTable");
@@ -102,7 +103,6 @@ sap.ui.define([
 				var booking = this.oView.getModel("bookings").getData().bookingData;
 				var bookingDetailId = booking[bookingPos].bookingDetails[bookingDetailPos].id;
 				this._deleteBookingDetail(bookingDetailId);
-				history.go();
 			}
 		},
 		onMakeEditable: function (oEvent) {
@@ -116,11 +116,7 @@ sap.ui.define([
 				iPos++;
 			}
 
-			console.log(iPos);
-
 			var aItems = oTable.getRows();
-
-			console.log(aItems);
 
 			for (var i = 0; i < aItems.length; i++) {
 				if (i == selectedItem) {
@@ -129,8 +125,6 @@ sap.ui.define([
 					aItems[i].getCells()[2].setEnabled(true);
 					aItems[i].getCells()[4].setEnabled(true);
 					aItems[i].getCells()[5].setEnabled(true);
-
-					console.log(aItems[i].getCells());
 				} else {
 					aItems[i].getCells()[0].setEnabled(false);
 					aItems[i].getCells()[1].setEnabled(false);
