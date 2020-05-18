@@ -38,7 +38,7 @@ sap.ui.define([
     			//enctype: 'multipart/form-data',
 				url: Constants.BASE_URL + Constants.LOGIN_PATH,  
     			success: function (response) {
-					oRouter.navTo("master", true);
+					oRouter.navTo("masterDetail", true);
         			//alert("ok");
     			},
     			error: function (e,xhr,textStatus,err,data) {

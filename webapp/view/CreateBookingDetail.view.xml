@@ -3,23 +3,23 @@
 	<m:Page showHeader="false" enableScrolling="false" class="sapUiContentPadding">
 		<m:content>
 			<m:OverflowToolbar class="sapFDynamicPageAlignContent">
-				<m:Title id="title" text="Create Booking"/>
+				<m:Title id="title" text="{i18n>bookingDetailTitle}"/>
 			</m:OverflowToolbar>
 			<form:SimpleForm minWidth="1024" maxContainerCols="2" layout="ResponsiveLayout" editable="true" visible="true">
 				<form:content>
-						<m:Label text="Date"/>
-						<m:DatePicker id="datade" value="" valueFormat="YYYY-MM-dd" displayFormat="YYYY-MM-dd" placeholder="YYYY-MM-dd" width="60%"/>
-						<m:Label text="Start"/>
-						<m:TimePicker id="TP1" value="" valueFormat="HH:mm" displayFormat="HH:mm" change="handleHourChange" minutesStep="30" valueState="None" placeholder="HH:mm" width="60%"/>
-						<m:Label text="End"/>
-						<m:TimePicker id="TP2" value="" valueFormat="HH:mm" displayFormat="HH:mm" change="handleHourChange" minutesStep="30" valueState="None" placeholder="HH:mm" width="60%"/>
-						<m:Label text="Hours"/>
+						<m:Label text="{i18n>date}"/>
+						<m:DatePicker id="datade" value="" valueFormat="YYYY-MM-dd" displayFormat="YYYY-MM-dd" placeholder="{i18n>dateFormat}" width="60%"/>
+						<m:Label text="{i18n>start}"/>
+						<m:TimePicker id="TP1" value="" valueFormat="HH:mm" displayFormat="HH:mm" change="handleHourChange" minutesStep="30" valueState="None" placeholder="{i18n>hourFormat}" width="60%"/>
+						<m:Label text="{i18n>end}"/>
+						<m:TimePicker id="TP2" value="" valueFormat="HH:mm" displayFormat="HH:mm" change="handleHourChange" minutesStep="30" valueState="None" placeholder="{i18n>hourFormat}" width="60%"/>
+						<m:Label text="{i18n>hours}"/>
 						<m:Input id="hours" value="" width="60%" enabled="false"/>
-						<m:Label text="PSP"/>
-						<m:ComboBox id="pspComboBox" value="" items="{ path: 'psps>/pspsData' }" width="60%">
+						<m:Label text="{i18n>psp}"/>
+						<m:ComboBox id="pspComboBox" items="{ path: 'psps>/pspsData' }" width="60%">
 							<core:Item key="{psps>pspId}" text="{psps>pspName}" enabled="true"/>
 						</m:ComboBox>
-						<m:Label text="Description"/>
+						<m:Label text="{i18n>description}"/>
 						<m:Input id="description" value="" change="handleChange" width="60%"/>
 				</form:content>
 			</form:SimpleForm>

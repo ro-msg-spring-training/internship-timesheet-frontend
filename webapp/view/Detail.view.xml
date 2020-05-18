@@ -16,41 +16,41 @@
                    ariaLabelledBy="title">
 				<toolbar>
 					<m:Toolbar>
-						<m:Title id="title2" text="Bookings"></m:Title>
+						<m:Title id="title2" text="{i18n>detailPageTitle}"></m:Title>
 						<m:ToolbarSpacer/>
-						<m:Button id="editButton4" text="Edit" type="Transparent" press="onMakeEditable"/>
-						<m:Button id="editButton3" text="Save" type="Transparent" press="onEdit"/>
-						<m:Button id="createButton" text="Create" type="Transparent" press="onCreate"/>
-						<m:Button id="deleteButton" text="Delete" type="Transparent" press="onDelete"/>
+						<m:Button id="editButton4" text="{i18n>editBookingDetailButton}" type="Transparent" press="onMakeEditable"/>
+						<m:Button id="editButton3" text="{i18n>saveBookingDetailButton}" type="Transparent" press="onEdit"/>
+						<m:Button id="createButton" text="{i18n>createBookingDetailButton}" type="Transparent" press="onCreate"/>
+						<m:Button id="deleteButton" text="{i18n>deleteBookingDetailButton}" type="Transparent" press="onDelete"/>
 					</m:Toolbar>
 				</toolbar>
 				<columns>
-					<Column label="Day">
+					<Column label="{i18n>columnDay}">
 						<template>
 							<m:Input value="{bookings>day}" enabled="false" editable="true"/>
 						</template>
 					</Column>
-					<Column label="Start Hour">
+					<Column label="{i18n>columnStartHour}">
 						<template>
 							<m:Input value="{bookings>startHour}" enabled="false" editable="true"/>
 						</template>
 					</Column>
-					<Column label="End Hour">
+					<Column label="{i18n>columnEndHour}">
 						<template>
 							<m:Input value="{bookings>endHour}" enabled="false" editable="true"/>
 						</template>
 					</Column>
-					<Column label="Hours">
+					<Column label="{i18n>columnWorkedHours}">
 						<template>
 							<m:Input value="{bookings>hours}" enabled="false" editable="false"/>
 						</template>
 					</Column>
-					<Column label="PSP">
+					<Column label="{i18n>columnPsp}">
 						<template>
 							<m:Input value="{bookings>pspName}" enabled="false" editable="true"/>
 						</template>
 					</Column>
-					<Column label="Details">
+					<Column label="{i18n>columnDetails}">
 						<template>
 							<m:Input value="{bookings>description}" enabled="false" editable="true"/>
 						</template>

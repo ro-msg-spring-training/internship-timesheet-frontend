@@ -70,8 +70,9 @@ sap.ui.define([
 		    		programName = users[i].programName;
 		    	}
 		    }
-				
-			this.oRouter.navTo("detail", {layout: fioriLibrary.LayoutType.TwoColumnsMidExpanded, user: user, programName: programName});	
+			var oFCL = this.oView.getParent().getParent();
+			oFCL.setLayout(fioriLibrary.LayoutType.TwoColumnsMidExpanded);
+			this.oRouter.navTo("detail", {layout: oFCL.getLayout(), user: user, programName: programName});	
         }
 	});
 });

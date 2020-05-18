@@ -90,7 +90,7 @@ sap.ui.define([
 							this.getView().byId("hours").setValue(hours +":"+minutes);
 						}
 					}
-					
+
 				}
 			} else {
 				this.getView().byId("createButton").setEnabled(false);

@@ -79,12 +79,7 @@ sap.ui.define([
 				url: Constants.BASE_URL + Constants.BOOKING_DETAIL_PATH + "/" + idBookingDetail,
 				dataType: "json",
 				async: false,
-				success: function (data, textStatus, jqXHR) {
-					console.log(data);
-				},
-				error: function (e,xhr,textStatus,err,data) {
-    				alert("da");
-				}
+				success: function (data, textStatus, jqXHR) {}
 			}).done(function (data) {});
 		},
 		onDelete: function (oEvent) {
