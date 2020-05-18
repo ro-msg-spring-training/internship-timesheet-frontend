@@ -55,22 +55,44 @@ sap.ui.define([
 
 			var booking = this.oView.getModel("bookings").getData().bookingData;
 			var bookingDay;
-			if (bookingPos !== undefined){
+			if (bookingPos !== undefined) {
 				bookingDay = booking[bookingPos].day;
-			}
-			else {
+			} else {
 				bookingDay = -1;
 			}
-				
+
 			this.oRouter.navTo("createBookingDetail", {
 				layout: fioriLibrary.LayoutType.TwoColumnsMidExpanded,
 				user: this._user,
 				programName: this._programName,
 				bookingDay: bookingDay
 			});
-		
+
 		},
-		
+
+		onCheck: function (oEvent) {
+			var oTable = this.byId("bookingsTable");
+			var aSelectedIndices = oTable.getSelectedIndices();
+			if (aSelectedIndices.length === 0) {
+				this.getView().byId("deleteButton").setEnabled(false);
+				this.getView().byId("editButton4").setEnabled(false);
+				return;
+			}
+			for (var j = 0; j < aSelectedIndices.length; j++) {
+				var bookingDetailPosition = oTable.getContextByIndex(aSelectedIndices[j]).getPath().split("/")[4];
+				if (bookingDetailPosition !== undefined) {
+					this.getView().byId("deleteButton").setEnabled(true);
+					this.getView().byId("editButton4").setEnabled(true);
+					return;
+				} else {
+					this.getView().byId("deleteButton").setEnabled(false);
+					this.getView().byId("editButton4").setEnabled(false);
+					return;
+				}
+			}
+
+		},
+
 		_deleteBookingDetail: function (idBookingDetail) {
 			$.ajax({
 				type: "DELETE",
@@ -86,10 +108,6 @@ sap.ui.define([
 		onDelete: function (oEvent) {
 			var oTable = this.byId("bookingsTable");
 			var aSelectedIndices = oTable.getSelectedIndices();
-			if (aSelectedIndices.length === 0) {
-				MessageToast.show("Select at least one booking detail first!");
-				return;
-			}
 			for (var j = 0; j < aSelectedIndices.length; j++) {
 				var bookingDetailPosition = oTable.getContextByIndex(aSelectedIndices[j]).getPath().split("/")[4];
 				if (bookingDetailPosition === undefined) {

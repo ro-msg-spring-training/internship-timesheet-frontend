@@ -1,28 +1,17 @@
-<mvc:View 
-	controllerName="sap.ui.demo.fiori2.controller.Detail" 
-	xmlns="sap.ui.table" 
-	xmlns:mvc="sap.ui.core.mvc" 
-	xmlns:u="sap.ui.unified"
-	xmlns:c="sap.ui.core" 
-	xmlns:m="sap.m" 
-	height="100%">
+<mvc:View controllerName="sap.ui.demo.fiori2.controller.Detail" xmlns="sap.ui.table" xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified"
+	xmlns:c="sap.ui.core" xmlns:m="sap.m" height="100%">
 	<m:Page showHeader="false" enableScrolling="true" class="sapUiContentPadding">
 		<m:content>
-			<TreeTable 
-				   id="bookingsTable" 
-            	   rows="{bookings>/bookingData}"
-                   selectionMode="MultiToggle"
-                   enableSelectAll="false"
-                   ariaLabelledBy="title"
-                   visibleRowCount="15">
+			<TreeTable id="bookingsTable" rows="{bookings>/bookingData}" selectionMode="MultiToggle" enableSelectAll="false" ariaLabelledBy="title"
+				rowSelectionChange="onCheck" visibleRowCount="15">
 				<toolbar>
 					<m:Toolbar>
 						<m:Title id="title2" text="{i18n>detailPageTitle}"></m:Title>
 						<m:ToolbarSpacer/>
-						<m:Button id="editButton4" text="{i18n>editBookingDetailButton}" type="Transparent" press="onMakeEditable"/>
-						<m:Button id="editButton3" text="{i18n>saveBookingDetailButton}" type="Transparent" press="onEdit"/>
+						<m:Button id="editButton4" text="{i18n>editBookingDetailButton}" enabled="false" type="Transparent" press="onMakeEditable"/>
+						<m:Button id="save" text="{i18n>saveBookingDetailButton}" type="Transparent" press="onEdit"/>
 						<m:Button id="createButton" text="{i18n>createBookingDetailButton}" type="Transparent" press="onCreate"/>
-						<m:Button id="deleteButton" text="{i18n>deleteBookingDetailButton}" type="Transparent" press="onDelete"/>
+						<m:Button id="deleteButton" text="{i18n>deleteBookingDetailButton}" enabled="false" type="Transparent" press="onDelete"/>
 					</m:Toolbar>
 				</toolbar>
 				<columns>
