@@ -6,14 +6,15 @@
 	xmlns:c="sap.ui.core" 
 	xmlns:m="sap.m" 
 	height="100%">
-	<m:Page showHeader="false" enableScrolling="false" class="sapUiContentPadding">
+	<m:Page showHeader="false" enableScrolling="true" class="sapUiContentPadding">
 		<m:content>
 			<TreeTable 
 				   id="bookingsTable" 
             	   rows="{bookings>/bookingData}"
                    selectionMode="MultiToggle"
                    enableSelectAll="false"
-                   ariaLabelledBy="title">
+                   ariaLabelledBy="title"
+                   visibleRowCount="15">
 				<toolbar>
 					<m:Toolbar>
 						<m:Title id="title2" text="{i18n>detailPageTitle}"></m:Title>
