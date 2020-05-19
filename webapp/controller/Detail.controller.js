@@ -23,7 +23,6 @@ sap.ui.define([
 		_onUserMatched: function (oEvent) {
 			this._user = oEvent.getParameter("arguments").user || this._user || "0";
 			this._programName = oEvent.getParameter("arguments").programName || this._programName || "0";
-
 			this._getBookingDetails();
 		},
 
@@ -41,10 +40,22 @@ sap.ui.define([
 				success: function (data, textStatus, jqXHR) {
 					oModel.setProperty("/bookingData", data);
 				}
-			}).done(function (data) {
-			});
+			}).done(function (data) {});
+
+			$.ajax({
+				type: "GET",
+				contentType: false,
+				url: Constants.BASE_URL + Constants.PROGRAMS_PATH + "/" + this._programName + Constants.PSPS_PATH,
+				dataType: "json",
+				async: false,
+				success: function (data, textStatus, jqXHR) {
+					oModel.setProperty("/pspsData", data);
+					console.log(oModel.getProperty("/pspsData"));
+				}
+			}).done(function (data) {});
 
 			this.oView.setModel(oModel, "bookings");
+
 		},
 
 		onCreate: function (oEvent) {
@@ -105,6 +116,7 @@ sap.ui.define([
 				this._getBookingDetails();
 			}.bind(this));
 		},
+
 		onDelete: function (oEvent) {
 			var oTable = this.byId("bookingsTable");
 			var aSelectedIndices = oTable.getSelectedIndices();
@@ -123,6 +135,7 @@ sap.ui.define([
 				this._deleteBookingDetail(bookingDetailId);
 			}
 		},
+
 		onMakeEditable: function (oEvent) {
 			var oTable = this.getView().byId("bookingsTable");
 			var selectedItem = oTable.getSelectedIndex();
@@ -152,6 +165,71 @@ sap.ui.define([
 				}
 			}
 
+		},
+
+		onEdit: function (oEvent) {
+			var oTable = this.getView().byId("bookingsTable");
+			var selectedItem = oTable.getSelectedIndex();
+
+			for (var i = 0; i < oTable.getSelectedIndices().length; i++) {
+				for (var j = 0; j < oTable.getRows().length; j++) {
+					var oControl = oTable.getRows()[oTable.getSelectedIndices()[i]].getCells()[j];
+					var bookingDetailPos = oTable.getContextByIndex(oTable.getSelectedIndices()[i]).getPath().split("/")[4];
+					var bookingPos = oTable.getContextByIndex(oTable.getSelectedIndices()[i]).getPath().split("/")[2];
+					var booking = this.oView.getModel("bookings").getData().bookingData;
+					var bookingDetailId = booking[bookingPos].bookingDetails[bookingDetailPos].id;
+					if (j == 0) {
+						var bookingDay = oControl.getValue();
+					}
+					if (j == 1) {
+						var startHour = oControl.getValue();
+					}
+					if (j == 2) {
+						var endHour = oControl.getValue();
+					}
+					if (j == 4) {
+						var pspName = oControl.getValue();
+						var psps = this.oView.getModel("bookings").getData().pspsData;
+						for (var k = 0; k < psps.length; k++) {
+							if (psps[k].pspName == pspName) {
+								var pspId = psps[k].pspId;
+							}
+						}
+					}
+					if (j == 5) {
+						var description = oControl.getValue();
+					}
+				}
+			}
+
+			var myformData = new FormData();
+			myformData.append("id", bookingDetailId);
+			myformData.append("bookingDay", bookingDay);
+			myformData.append("endHour", endHour);
+			myformData.append("pspName", pspName);
+			myformData.append("startHour", startHour);
+			myformData.append("description", description);
+			myformData.append("bookingId", -1);
+			myformData.append("pspId", pspId);
+			myformData.append("userId", this._user);
+
+			$.ajax({
+				type: "PUT",
+				processData: false,
+				contentType: false,
+				data: myformData,
+				url: Constants.BASE_URL + Constants.BOOKING_DETAIL_PATH,
+				async: false,
+				success: function (data, textStatus, jqXHR) {},
+				error: function (e, xhr, textStatus, err, data) {
+					MessageToast.show("BookingDetail not manage to be updated!");
+				}
+			}).done(function (data) {
+				this._getBookingDetails();
+			}.bind(this));
+
+			this.oView.byId("endHour").setEnabled(false);
+			this.oView.byId("starHour").setEnabled(false);
 		}
 
 	});

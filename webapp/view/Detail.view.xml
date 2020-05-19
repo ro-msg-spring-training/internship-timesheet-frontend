@@ -1,5 +1,5 @@
 <mvc:View controllerName="sap.ui.demo.fiori2.controller.Detail" xmlns="sap.ui.table" xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified"
-	xmlns:c="sap.ui.core" xmlns:m="sap.m" height="100%">
+	xmlns:c="sap.ui.core" xmlns:m="sap.m" xmlns:core="sap.ui.core" height="100%">
 	<m:Page showHeader="false" enableScrolling="true" class="sapUiContentPadding">
 		<m:content>
 			<TreeTable id="bookingsTable" rows="{bookings>/bookingData}" selectionMode="MultiToggle" enableSelectAll="false" ariaLabelledBy="title"
@@ -17,32 +17,34 @@
 				<columns>
 					<Column label="{i18n>columnDay}">
 						<template>
-							<m:Input value="{bookings>day}" enabled="false" editable="true"/>
+							<m:Input id="bookingDay" value="{bookings>day}" enabled="false" editable="true"/>
 						</template>
 					</Column>
 					<Column label="{i18n>columnStartHour}">
 						<template>
-							<m:Input value="{bookings>startHour}" enabled="false" editable="true"/>
+							<m:Input id="startHour" value="{bookings>startHour}" enabled="false" editable="true"/>
 						</template>
 					</Column>
 					<Column label="{i18n>columnEndHour}">
 						<template>
-							<m:Input value="{bookings>endHour}" enabled="false" editable="true"/>
+							<m:Input id="endHour" value="{bookings>endHour}" enabled="false" editable="true"/>
 						</template>
 					</Column>
 					<Column label="{i18n>columnWorkedHours}">
 						<template>
-							<m:Input value="{bookings>hours}" enabled="false" editable="false"/>
+							<m:Input id="hours" value="{bookings>hours}" enabled="false" editable="false"/>
 						</template>
 					</Column>
 					<Column label="{i18n>columnPsp}">
 						<template>
-							<m:Input value="{bookings>pspName}" enabled="false" editable="true"/>
+							<m:ComboBox id="pspComboBox" enabled="false" width="auto" items="{ path: 'bookings>/pspsData', templateShareable: true }">
+							<core:Item key="{bookings>pspId}" text="{bookings>pspName}"/>
+						</m:ComboBox>
 						</template>
 					</Column>
 					<Column label="{i18n>columnDetails}">
 						<template>
-							<m:Input value="{bookings>description}" enabled="false" editable="true"/>
+							<m:Input id="description" value="{bookings>description}" enabled="false" editable="true"/>
 						</template>
 					</Column>
 				</columns>
