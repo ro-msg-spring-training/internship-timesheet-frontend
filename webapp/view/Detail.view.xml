@@ -17,7 +17,7 @@
 				<columns>
 					<Column label="{i18n>columnDay}">
 						<template>
-							<m:Input id="bookingDay" value="{bookings>day}" enabled="false" editable="true"/>
+							<m:Input id="bookingDay" value="{bookings>day}" enabled="false" editable="false"/>
 						</template>
 					</Column>
 					<Column label="{i18n>columnStartHour}">
@@ -37,18 +37,22 @@
 					</Column>
 					<Column label="{i18n>columnPsp}">
 						<template>
-							<m:ComboBox id="pspComboBox" enabled="false" width="auto" items="{ path: 'bookings>/pspsData', templateShareable: true }">
-							<core:Item key="{bookings>pspId}" text="{bookings>pspName}"/>
-						</m:ComboBox>
+							<m:ComboBox id="pspComboBox" value="{bookings>pspName}" visible="true" enabled="false" width="auto"
+								items="{ path: 'bookings>/pspsData', templateShareable: true }" editable="true">
+								<core:Item key="{bookings>pspId}" text="{bookings>pspName}"/>
+							</m:ComboBox>
 						</template>
-					</Column>
-					<Column label="{i18n>columnDetails}">
-						<template>
-							<m:Input id="description" value="{bookings>description}" enabled="false" editable="true"/>
-						</template>
-					</Column>
-				</columns>
-			</TreeTable>
-		</m:content>
-	</m:Page>
+						<!--<template>-->
+						<!--	<m:Input id="pspComboInput" visible="false" value="{bookings>pspName}" enabled="false" editable="true"/>-->
+						<!--</template>-->
+				</Column>
+				<Column label="{i18n>columnDetails}">
+					<template>
+						<m:Input id="description" value="{bookings>description}" enabled="false" change="handleDescription" editable="true"/>
+					</template>
+				</Column>
+			</columns>
+		</TreeTable>
+	</m:content>
+</m:Page>
 </mvc:View>

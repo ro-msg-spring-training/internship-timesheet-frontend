@@ -50,7 +50,6 @@ sap.ui.define([
 				async: false,
 				success: function (data, textStatus, jqXHR) {
 					oModel.setProperty("/pspsData", data);
-					console.log(oModel.getProperty("/pspsData"));
 				}
 			}).done(function (data) {});
 
@@ -139,6 +138,8 @@ sap.ui.define([
 		onMakeEditable: function (oEvent) {
 			var oTable = this.getView().byId("bookingsTable");
 			var selectedItem = oTable.getSelectedIndex();
+			//this.oView.byId("pspComboInput").setVisible(false);
+			//this.oView.byId("pspComboBox").setVisible(true);
 
 			var iBookingDetailPos;
 			var iPos = 0;
@@ -151,13 +152,11 @@ sap.ui.define([
 
 			for (var i = 0; i < aItems.length; i++) {
 				if (i == selectedItem) {
-					aItems[i].getCells()[0].setEnabled(true);
 					aItems[i].getCells()[1].setEnabled(true);
 					aItems[i].getCells()[2].setEnabled(true);
 					aItems[i].getCells()[4].setEnabled(true);
 					aItems[i].getCells()[5].setEnabled(true);
 				} else {
-					aItems[i].getCells()[0].setEnabled(false);
 					aItems[i].getCells()[1].setEnabled(false);
 					aItems[i].getCells()[2].setEnabled(false);
 					aItems[i].getCells()[4].setEnabled(false);
@@ -167,8 +166,14 @@ sap.ui.define([
 
 		},
 
+		handleDescriotion: function () {
+			this.getView().byId("description").setValue(this.getView().byId("description").getValue());
+		},
+
 		onEdit: function (oEvent) {
 			var oTable = this.getView().byId("bookingsTable");
+			//this.oView.byId("pspComboInput").setVisible(false);
+			//this.oView.byId("pspComboBox").setVisible(true);
 			var selectedItem = oTable.getSelectedIndex();
 
 			for (var i = 0; i < oTable.getSelectedIndices().length; i++) {
@@ -180,27 +185,37 @@ sap.ui.define([
 					var bookingDetailId = booking[bookingPos].bookingDetails[bookingDetailPos].id;
 					if (j == 0) {
 						var bookingDay = oControl.getValue();
+						oControl.setValue(bookingDay);
 					}
 					if (j == 1) {
 						var startHour = oControl.getValue();
+						oControl.setValue(startHour);
 					}
 					if (j == 2) {
 						var endHour = oControl.getValue();
+						oControl.setValue(endHour);
 					}
 					if (j == 4) {
 						var pspName = oControl.getValue();
+						oControl.setValue(pspName);
+
 						var psps = this.oView.getModel("bookings").getData().pspsData;
+
 						for (var k = 0; k < psps.length; k++) {
 							if (psps[k].pspName == pspName) {
 								var pspId = psps[k].pspId;
 							}
 						}
+
+						this.getView().byId("pspComboBox").setValue(pspName);
 					}
 					if (j == 5) {
 						var description = oControl.getValue();
+						oControl.setValue(description);
 					}
 				}
 			}
+			
 
 			var myformData = new FormData();
 			myformData.append("id", bookingDetailId);
@@ -222,15 +237,13 @@ sap.ui.define([
 				async: false,
 				success: function (data, textStatus, jqXHR) {},
 				error: function (e, xhr, textStatus, err, data) {
-					MessageToast.show("BookingDetail not manage to be updated!");
+					MessageToast.show("Select a pspName from dropdown of PSP Name, please!");
 				}
 			}).done(function (data) {
 				this._getBookingDetails();
 			}.bind(this));
 
-			this.oView.byId("endHour").setEnabled(false);
-			this.oView.byId("starHour").setEnabled(false);
+			this.onMakeEditable(oEvent);
 		}
-
 	});
 });
