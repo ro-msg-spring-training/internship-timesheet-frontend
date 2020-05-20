@@ -42,9 +42,6 @@
 								<core:Item key="{bookings>pspId}" text="{bookings>pspName}"/>
 							</m:ComboBox>
 						</template>
-						<!--<template>-->
-						<!--	<m:Input id="pspComboInput" visible="false" value="{bookings>pspName}" enabled="false" editable="true"/>-->
-						<!--</template>-->
 				</Column>
 				<Column label="{i18n>columnDetails}">
 					<template>
