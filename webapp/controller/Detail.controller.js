@@ -138,8 +138,6 @@ sap.ui.define([
 		onMakeEditable: function (oEvent) {
 			var oTable = this.getView().byId("bookingsTable");
 			var selectedItem = oTable.getSelectedIndex();
-			//this.oView.byId("pspComboInput").setVisible(false);
-			//this.oView.byId("pspComboBox").setVisible(true);
 
 			var iBookingDetailPos;
 			var iPos = 0;
@@ -172,8 +170,6 @@ sap.ui.define([
 
 		onEdit: function (oEvent) {
 			var oTable = this.getView().byId("bookingsTable");
-			//this.oView.byId("pspComboInput").setVisible(false);
-			//this.oView.byId("pspComboBox").setVisible(true);
 			var selectedItem = oTable.getSelectedIndex();
 
 			for (var i = 0; i < oTable.getSelectedIndices().length; i++) {
