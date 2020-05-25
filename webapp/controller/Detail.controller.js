@@ -55,7 +55,60 @@ sap.ui.define([
 			}).done(function (data) {});
 
 			this.oView.setModel(oModel, "bookings");
+			this._setFilterByMonth();
 
+		},
+		
+		_setFilterByMonth: function() {
+			var aYears = [];
+			var oBookings = this.oView.getModel("bookings").getData().bookingData;
+			const monthNames = ["January", "February", "March", "April", "May", "June",
+			  "July", "August", "September", "October", "November", "December"
+			];
+		
+			for(var booking_index in oBookings) {
+				var date = new Date(oBookings[booking_index].day);
+				var month = monthNames[date.getMonth()];
+				var year = date.getFullYear().toString();
+				
+				var foundYear = undefined;
+				
+				for(var year_index in aYears) {
+					if(aYears[year_index].year === year) {
+						foundYear = aYears[year_index];
+						break;
+					}
+				}
+				
+				var isNewMonth = 1;
+				
+				if(foundYear !== undefined) {
+					for(var month_index in foundYear.months) {
+						if(foundYear.months[month_index].month === month) {
+							isNewMonth = 0;
+							break;
+						}
+					}
+					
+					if(isNewMonth === 1) {
+						aYears[year_index].months.push({
+							month: month
+						});
+					}
+				}
+				
+				if(foundYear === undefined) {
+					aYears.push({
+						year: year,
+						months: [{
+							month: month
+						}]
+					});
+				}
+			}
+			
+			// console.log(aYears);
+			this.oView.getModel("bookings").setProperty("/filterData", aYears);
 		},
 
 		onCreate: function (oEvent) {
@@ -207,14 +260,14 @@ sap.ui.define([
 						var psps = this.oView.getModel("bookings").getData().pspsData;
 
 						for (var k = 0; k < psps.length; k++) {
-							if (psps[k].pspName == pspName) {
+							if (psps[k].pspName === pspName) {
 								var pspId = psps[k].pspId;
 							}
 						}
 
 						this.getView().byId("pspComboBox").setValue(pspName);
 					}
-					if (j == 5) {
+					if (j === 5) {
 						var description = oControl.getValue();
 						oControl.setValue(description);
 					}

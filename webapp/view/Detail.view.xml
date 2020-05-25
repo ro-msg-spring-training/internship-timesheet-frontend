@@ -8,6 +8,18 @@
 					<m:Toolbar>
 						<m:Title id="title2" text="{i18n>detailPageTitle}"></m:Title>
 						<m:ToolbarSpacer/>
+						<m:MenuButton text="{i18n>detailPageFilterByMonth}" buttonMode="Split" useDefaultActionOnly="true">
+							<m:menu>
+								<m:Menu itemSelected="onMenuAction" items="{ path: 'bookings>/filterData', templateShareable: true }">
+									<m:MenuItem text="{bookings>year}" icon="sap-icon://check-availability" items="{ path: 'bookings>months', templateShareable: true }">
+										<m:items>
+											<m:MenuItem text="{bookings>month}" icon="sap-icon://activities"/>
+										</m:items>
+									</m:MenuItem>
+								</m:Menu>
+							</m:menu>
+						</m:MenuButton>
+						<m:ToolbarSpacer/>
 						<m:Button id="editButton" text="{i18n>editBookingDetailButton}" enabled="false" type="Transparent" press="onMakeEditable"/>
 						<m:Button id="saveButton" text="{i18n>saveBookingDetailButton}" enabled="false" type="Transparent" press="onEdit"/>
 						<m:Button id="createButton" text="{i18n>createBookingDetailButton}" type="Transparent" press="onCreate"/>
@@ -15,24 +27,24 @@
 					</m:Toolbar>
 				</toolbar>
 				<columns>
-					<Column label="{i18n>columnDay}">
+					<Column label="{i18n>columnDay}" width="155px">
 						<template>
-							<m:Input id="bookingDay" value="{bookings>day}" enabled="false" editable="false"/>
+							<m:Input class="tableRow" value="{bookings>day}" enabled="false" editable="false"/>
 						</template>
 					</Column>
-					<Column label="{i18n>columnStartHour}">
+					<Column label="{i18n>columnStartHour}" width="100px">
 						<template>
-							<m:Input id="startHour" value="{bookings>startHour}" enabled="false" editable="true"/>
+							<m:Input class="tableRow" value="{bookings>startHour}" enabled="false" editable="true"/>
 						</template>
 					</Column>
-					<Column label="{i18n>columnEndHour}">
+					<Column label="{i18n>columnEndHour}" width="100px">
 						<template>
-							<m:Input id="endHour" value="{bookings>endHour}" enabled="false" editable="true"/>
+							<m:Input class="tableRow" value="{bookings>endHour}" enabled="false" editable="true"/>
 						</template>
 					</Column>
-					<Column label="{i18n>columnWorkedHours}">
+					<Column label="{i18n>columnWorkedHours}" width="70px">
 						<template>
-							<m:Input id="hours" value="{bookings>hours}" enabled="false" editable="false"/>
+							<m:Input class="tableRow" value="{bookings>hours}" enabled="false" editable="false"/>
 						</template>
 					</Column>
 					<Column label="{i18n>columnPsp}">
@@ -42,14 +54,14 @@
 								<core:Item key="{bookings>pspId}" text="{bookings>pspName}"/>
 							</m:ComboBox>
 						</template>
-				</Column>
-				<Column label="{i18n>columnDetails}">
-					<template>
-						<m:Input id="description" value="{bookings>description}" enabled="false" change="handleDescription" editable="true"/>
-					</template>
-				</Column>
-			</columns>
-		</TreeTable>
-	</m:content>
-</m:Page>
+					</Column>
+					<Column label="{i18n>columnDetails}">
+						<template>
+							<m:Input class="tableRow" value="{bookings>description}" enabled="false" change="handleDescription" editable="true"/>
+						</template>
+					</Column>
+				</columns>
+			</TreeTable>
+		</m:content>
+	</m:Page>
 </mvc:View>

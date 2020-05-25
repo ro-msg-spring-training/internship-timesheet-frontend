@@ -1,3 +1,18 @@
-.sapUiTable{
-	height:100px;	
+.sapUiTable {
+    height: 100px;
+}
+
+sapThemeText {
+    color: blue;
+}
+
+.tableBg {
+    background-color: red;
+}
+
+.tableRow {
+    -webkit-text-fill-color: black;
+    -webkit-text-stroke-color: black;
+    -webkit-text-stroke-width: thin;
+    background-color: white;
 }
