@@ -13,7 +13,7 @@ sap.ui.define([
 
 			this.oRouter = oOwnerComponent.getRouter();
 			this.oModel = oOwnerComponent.getModel();
-
+			
 			this.oRouter.getRoute("master").attachPatternMatched(this._onUserMatched, this);
 			this.oRouter.getRoute("detail").attachPatternMatched(this._onUserMatched, this);
 
@@ -24,6 +24,7 @@ sap.ui.define([
 			this._user = oEvent.getParameter("arguments").user || this._user || "0";
 			this._programName = oEvent.getParameter("arguments").programName || this._programName || "0";
 			this._getBookingDetails();
+			
 		},
 
 		_getBookingDetails: function () {
@@ -85,25 +86,28 @@ sap.ui.define([
 			var aSelectedIndices = oTable.getSelectedIndices();
 			if (aSelectedIndices.length === 0) {
 				this.getView().byId("deleteButton").setEnabled(false);
-				this.getView().byId("editButton4").setEnabled(false);
+				this.getView().byId("editButton").setEnabled(false);
+				this.getView().byId("saveButton").setEnabled(false);
 				return;
 			}
 			for (var j = 0; j < aSelectedIndices.length; j++) {
 				var bookingDetailPosition = oTable.getContextByIndex(aSelectedIndices[j]).getPath().split("/")[4];
 				if (bookingDetailPosition !== undefined) {
 					this.getView().byId("deleteButton").setEnabled(true);
-					this.getView().byId("editButton4").setEnabled(true);
+					this.getView().byId("editButton").setEnabled(true);
+					this.getView().byId("saveButton").setEnabled(true);
 					return;
 				} else {
 					this.getView().byId("deleteButton").setEnabled(false);
-					this.getView().byId("editButton4").setEnabled(false);
+					this.getView().byId("editButton").setEnabled(false);
+					this.getView().byId("saveButton").setEnabled(false);
 					return;
 				}
 			}
 
 		},
 
-		_deleteBookingDetail: function (idBookingDetail) {
+		_deleteBookingDetail: function (idBookingDetail, length) {
 			$.ajax({
 				type: "DELETE",
 				contentType: false,
@@ -112,7 +116,9 @@ sap.ui.define([
 				async: false,
 				success: function (data, textStatus, jqXHR) {}
 			}).done(function (data) {
-				this._getBookingDetails();
+				if(length === 0) {
+					this._getBookingDetails();
+				}
 			}.bind(this));
 		},
 
@@ -126,12 +132,15 @@ sap.ui.define([
 					return;
 				}
 			}
+			
+			var length = aSelectedIndices.length;
+			
 			for (var i = 0; i < aSelectedIndices.length; i++) {
 				var bookingDetailPos = oTable.getContextByIndex(aSelectedIndices[i]).getPath().split("/")[4];
 				var bookingPos = oTable.getContextByIndex(aSelectedIndices[i]).getPath().split("/")[2];
 				var booking = this.oView.getModel("bookings").getData().bookingData;
 				var bookingDetailId = booking[bookingPos].bookingDetails[bookingDetailPos].id;
-				this._deleteBookingDetail(bookingDetailId);
+				this._deleteBookingDetail(bookingDetailId, --length);
 			}
 		},
 

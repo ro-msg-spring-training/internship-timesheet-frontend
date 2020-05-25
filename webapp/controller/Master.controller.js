@@ -98,8 +98,11 @@ sap.ui.define([
 				user = userPath.split("/").slice(-1).pop();
 			var programName;
 			var users = this.oView.getModel("users").getData().modelData;
+			
+			var userId = this.oProductsTable.getBinding("items").oList[user].id;
+			
 			for (var i = 0; i < users.length; i++) {
-				if (users[i].id == user) {
+				if (users[i].id == userId) {
 					programName = users[i].programName;
 				}
 			}
@@ -107,7 +110,7 @@ sap.ui.define([
 			oFCL.setLayout(fioriLibrary.LayoutType.TwoColumnsMidExpanded);
 			this.oRouter.navTo("detail", {
 				layout: oFCL.getLayout(),
-				user: user,
+				user: userId,
 				programName: programName
 			});
 		}
