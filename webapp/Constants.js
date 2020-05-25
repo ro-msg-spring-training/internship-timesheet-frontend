@@ -9,7 +9,7 @@ function() {
         PROGRAMS_PATH: "/programs",
         PSPS_PATH:"/psps",
         BOOKING_DETAIL_PATH: "/bookingDetail",
-        LOGIN_PATH: "/loginUser"
+        LOGIN_PATH: "/login"
     };
 
     return constants;
