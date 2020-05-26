@@ -116,7 +116,7 @@ sap.ui.define([
 			myformData.append("startHour", startTime);
 			myformData.append("endHour", endTime);
 			myformData.append("pspName", pspName);
-			myformData.append("date", date);
+			myformData.append("day", date);
 			myformData.append("bookingId", -1);
 			myformData.append("pspId", pspId);
 			myformData.append("userId", userId);

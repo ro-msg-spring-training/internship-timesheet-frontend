@@ -8,17 +8,18 @@
 					<m:Toolbar>
 						<m:Title id="title2" text="{i18n>detailPageTitle}"></m:Title>
 						<m:ToolbarSpacer/>
-						<m:MenuButton text="{i18n>detailPageFilterByMonth}" buttonMode="Split" useDefaultActionOnly="true">
+						<m:MenuButton text="{i18n>detailPageFilterByMonth}" buttonMode="Split" useDefaultActionOnly="true" >
 							<m:menu>
 								<m:Menu itemSelected="onMenuAction" items="{ path: 'bookings>/filterData', templateShareable: true }">
 									<m:MenuItem text="{bookings>year}" icon="sap-icon://check-availability" items="{ path: 'bookings>months', templateShareable: true }">
 										<m:items>
-											<m:MenuItem text="{bookings>month}" icon="sap-icon://activities"/>
+											<m:MenuItem text="{bookings>month}"/>
 										</m:items>
 									</m:MenuItem>
 								</m:Menu>
 							</m:menu>
 						</m:MenuButton>
+						<m:OverflowToolbarButton icon="sap-icon://clear-filter" type="Transparent" press=".clearFilter"/>
 						<m:ToolbarSpacer/>
 						<m:Button id="editButton" text="{i18n>editBookingDetailButton}" enabled="false" type="Transparent" press="onMakeEditable"/>
 						<m:Button id="saveButton" text="{i18n>saveBookingDetailButton}" enabled="false" type="Transparent" press="onEdit"/>
@@ -27,27 +28,27 @@
 					</m:Toolbar>
 				</toolbar>
 				<columns>
-					<Column label="{i18n>columnDay}" width="155px">
+					<Column label="{i18n>columnDay}" width="170px">
 						<template>
-							<m:Input class="tableRow" value="{bookings>day}" enabled="false" editable="false"/>
+							<m:Input id="day" class="tableRow" value="{bookings>day}" enabled="false" editable="false"/>
 						</template>
 					</Column>
-					<Column label="{i18n>columnStartHour}" width="100px">
+					<Column label="{i18n>columnStartHour}" width="85px">
 						<template>
 							<m:Input class="tableRow" value="{bookings>startHour}" enabled="false" editable="true"/>
 						</template>
 					</Column>
-					<Column label="{i18n>columnEndHour}" width="100px">
+					<Column label="{i18n>columnEndHour}" width="85px">
 						<template>
 							<m:Input class="tableRow" value="{bookings>endHour}" enabled="false" editable="true"/>
 						</template>
 					</Column>
-					<Column label="{i18n>columnWorkedHours}" width="70px">
+					<Column label="{i18n>columnWorkedHours}" width="80px">
 						<template>
 							<m:Input class="tableRow" value="{bookings>hours}" enabled="false" editable="false"/>
 						</template>
 					</Column>
-					<Column label="{i18n>columnPsp}">
+					<Column label="{i18n>columnPsp}" width="190px">
 						<template>
 							<m:ComboBox id="pspComboBox" value="{bookings>pspName}" visible="true" enabled="false" width="auto"
 								items="{ path: 'bookings>/pspsData', templateShareable: true }" editable="true">
