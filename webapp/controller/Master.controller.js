@@ -69,7 +69,7 @@ sap.ui.define([
 					oTableSearchState.push(new Filter({
 						filters: [
 							new Filter("firstName", FilterOperator.Contains, sQuery),
-							new Filter("lastName", FilterOperator.Contains, sQuery),
+							new Filter("lastName", FilterOperator.Contains, sQuery)
 						],
 						or: true | false
 					}));
@@ -102,7 +102,7 @@ sap.ui.define([
 			var userId = this.oProductsTable.getBinding("items").oList[user].id;
 			
 			for (var i = 0; i < users.length; i++) {
-				if (users[i].id == userId) {
+				if (users[i].id === userId) {
 					programName = users[i].programName;
 				}
 			}

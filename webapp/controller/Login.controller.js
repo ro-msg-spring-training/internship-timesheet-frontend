@@ -17,8 +17,6 @@ sap.ui.define([
 		},
 		
 		onLogin : function () {
-			var oModel = this.getModel("loginModel");
-			
 			var username = this.getView().byId("username").getValue();
 			var password = this.getView().byId("password").getValue();
 			
@@ -27,7 +25,8 @@ sap.ui.define([
 			myformData.append("password", password);
     		
     		var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-
+			
+			var view = this.getView();
 			$.ajax({
     			method: 'post',
 				processData: false,
@@ -38,7 +37,8 @@ sap.ui.define([
 					oRouter.navTo("masterDetail", true);
     			},
     			error: function (e,xhr,textStatus,err,data) {
-    				MessageToast.show("Invalid username or password");
+    				var message = view.getModel("i18n").getResourceBundle().getText("loginErrorMessage");
+    				MessageToast.show(message);
 				}
 			});
 		},

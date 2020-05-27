@@ -16,12 +16,10 @@ sap.ui.define([
 
 			this.oRouter = oOwnerComponent.getRouter();
 			this.oModel = oOwnerComponent.getModel();
-
-			this.oRouter.getRoute("master").attachPatternMatched(this._onUserMatched, this);
+			
 			this.oRouter.getRoute("detail").attachPatternMatched(this._onUserMatched, this);
 
 			this.oBookingsTable = this.oView.byId("bookingsTable");
-			
 		},
 
 		_onUserMatched: function (oEvent) {
@@ -34,7 +32,6 @@ sap.ui.define([
 
 			var oModel = new sap.ui.model.json.JSONModel();
 			this.oView = this.getView();
-			var oNewView = this.oView;
 			
 			$.ajax({
 				type: "GET",
@@ -45,7 +42,7 @@ sap.ui.define([
 				success: function (data, textStatus, jqXHR) {
 					oModel.setProperty("/bookingData", data);
 				}
-			}).done(function (data) {});
+			});
 
 			$.ajax({
 				type: "GET",
@@ -56,7 +53,7 @@ sap.ui.define([
 				success: function (data, textStatus, jqXHR) {
 					oModel.setProperty("/pspsData", data);
 				}
-			}).done(function (data) {});
+			});
 
 			this.oView.setModel(oModel, "bookings");
 			this._setFilterByMonth();
@@ -66,13 +63,10 @@ sap.ui.define([
 		_setFilterByMonth: function () {
 			var aYears = [];
 			var oBookings = this.oView.getModel("bookings").getData().bookingData;
-			const monthNames = ["January", "February", "March", "April", "May", "June",
-				"July", "August", "September", "October", "November", "December"
-			];
 
 			for (var booking_index in oBookings) {
 				var date = new Date(oBookings[booking_index].day);
-				var month = monthNames[date.getMonth()];
+				var month = Constants.MONTH_NAMES[date.getMonth()];
 				var year = date.getFullYear().toString();
 
 				var foundYear = undefined;
@@ -185,7 +179,8 @@ sap.ui.define([
 			for (var j = 0; j < aSelectedIndices.length; j++) {
 				var bookingDetailPosition = oTable.getContextByIndex(aSelectedIndices[j]).getPath().split("/")[4];
 				if (bookingDetailPosition === undefined) {
-					MessageToast.show("Select just booking details, please!");
+					var message = this.getView().getModel("i18n").getResourceBundle().getText("detailPageWarningMessage");
+					MessageToast.show(message);
 					return;
 				}
 			}
@@ -205,17 +200,10 @@ sap.ui.define([
 			var oTable = this.getView().byId("bookingsTable");
 			var selectedItem = oTable.getSelectedIndex();
 
-			var iBookingDetailPos;
-			var iPos = 0;
-			for (var i = 0; i <= parseInt(selectedItem); i++) {
-				iBookingDetailPos = oTable.getContextByIndex(selectedItem).getPath().split("/")[4];
-				iPos++;
-			}
-
 			var aItems = oTable.getRows();
 
 			for (var i = 0; i < aItems.length; i++) {
-				if (i == selectedItem) {
+				if (i === selectedItem) {
 					aItems[i].getCells()[1].setEnabled(true);
 					aItems[i].getCells()[2].setEnabled(true);
 					aItems[i].getCells()[4].setEnabled(true);
@@ -236,7 +224,6 @@ sap.ui.define([
 
 		onEdit: function (oEvent) {
 			var oTable = this.getView().byId("bookingsTable");
-			var selectedItem = oTable.getSelectedIndex();
 
 			for (var i = 0; i < oTable.getSelectedIndices().length; i++) {
 				for (var j = 0; j < oTable.getRows().length; j++) {
@@ -245,19 +232,19 @@ sap.ui.define([
 					var bookingPos = oTable.getContextByIndex(oTable.getSelectedIndices()[i]).getPath().split("/")[2];
 					var booking = this.oView.getModel("bookings").getData().bookingData;
 					var bookingDetailId = booking[bookingPos].bookingDetails[bookingDetailPos].id;
-					if (j == 0) {
+					if (j === 0) {
 						var bookingDay = oControl.getValue();
 						oControl.setValue(bookingDay);
 					}
-					if (j == 1) {
+					if (j === 1) {
 						var startHour = oControl.getValue();
 						oControl.setValue(startHour);
 					}
-					if (j == 2) {
+					if (j === 2) {
 						var endHour = oControl.getValue();
 						oControl.setValue(endHour);
 					}
-					if (j == 4) {
+					if (j === 4) {
 						var pspName = oControl.getValue();
 						oControl.setValue(pspName);
 
@@ -309,15 +296,11 @@ sap.ui.define([
 
 		onMenuAction: function (oEvent) {
 			var oItem = oEvent.getParameter("item");
-
-			const monthNames = ["January", "February", "March", "April", "May", "June",
-				"July", "August", "September", "October", "November", "December"
-			];
 			
 			// Get month number
 			var iMonthNumber = 0;
 			for(var i = 0; i < 12; i++) {
-				if(monthNames[i] === oItem.getText()) {
+				if(Constants.MONTH_NAMES[i] === oItem.getText()) {
 					iMonthNumber = i + 1;
 					break;
 				}

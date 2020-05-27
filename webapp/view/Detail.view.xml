@@ -1,14 +1,14 @@
-<mvc:View controllerName="sap.ui.demo.fiori2.controller.Detail" xmlns="sap.ui.table" xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified"
-	xmlns:c="sap.ui.core" xmlns:m="sap.m" xmlns:core="sap.ui.core" height="100%">
+<mvc:View controllerName="sap.ui.demo.fiori2.controller.Detail" xmlns="sap.ui.table" xmlns:mvc="sap.ui.core.mvc" xmlns:m="sap.m"
+	xmlns:core="sap.ui.core" height="100%">
 	<m:Page showHeader="false" enableScrolling="true" class="sapUiContentPadding">
 		<m:content>
 			<TreeTable id="bookingsTable" rows="{bookings>/bookingData}" selectionMode="MultiToggle" enableSelectAll="false" ariaLabelledBy="title"
 				rowSelectionChange="onCheck" visibleRowCount="15">
 				<toolbar>
 					<m:Toolbar>
-						<m:Title id="title2" text="{i18n>detailPageTitle}"></m:Title>
+						<m:Title text="{i18n>detailPageTitle}"></m:Title>
 						<m:ToolbarSpacer/>
-						<m:MenuButton text="{i18n>detailPageFilterByMonth}" buttonMode="Split" useDefaultActionOnly="true" >
+						<m:MenuButton text="{i18n>detailPageFilterByMonth}" buttonMode="Split" useDefaultActionOnly="true">
 							<m:menu>
 								<m:Menu itemSelected="onMenuAction" items="{ path: 'bookings>/filterData', templateShareable: true }">
 									<m:MenuItem text="{bookings>year}" icon="sap-icon://check-availability" items="{ path: 'bookings>months', templateShareable: true }">

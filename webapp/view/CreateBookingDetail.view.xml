@@ -1,5 +1,5 @@
 <mvc:View controllerName="sap.ui.demo.fiori2.controller.CreateBookingDetail" xmlns="sap.ui.table" xmlns:mvc="sap.ui.core.mvc"
-	xmlns:u="sap.ui.unified" xmlns:c="sap.ui.core" xmlns:m="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" height="100%">
+	xmlns:m="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" height="100%">
 	<m:Page showHeader="false" enableScrolling="false" class="sapUiContentPadding">
 		<m:content>
 			<m:OverflowToolbar class="sapFDynamicPageAlignContent">
@@ -7,20 +7,22 @@
 			</m:OverflowToolbar>
 			<form:SimpleForm minWidth="1024" maxContainerCols="2" layout="ResponsiveLayout" editable="true" visible="true">
 				<form:content>
-						<m:Label text="{i18n>date}"/>
-						<m:DatePicker id="datade" value="" valueFormat="YYYY-MM-dd" displayFormat="YYYY-MM-dd" placeholder="{i18n>dateFormat}" width="60%"/>
-						<m:Label text="{i18n>start}"/>
-						<m:TimePicker id="TP1" value="" valueFormat="HH:mm" displayFormat="HH:mm" change="handleHourChange" minutesStep="30" valueState="None" placeholder="{i18n>hourFormat}" width="60%"/>
-						<m:Label text="{i18n>end}"/>
-						<m:TimePicker id="TP2" value="" valueFormat="HH:mm" displayFormat="HH:mm" change="handleHourChange" minutesStep="30" valueState="None" placeholder="{i18n>hourFormat}" width="60%"/>
-						<m:Label text="{i18n>hours}"/>
-						<m:Input id="hours" value="" width="60%" enabled="false"/>
-						<m:Label text="{i18n>psp}"/>
-						<m:ComboBox id="pspComboBox" items="{ path: 'psps>/pspsData' }" width="60%">
-							<core:Item key="{psps>pspId}" text="{psps>pspName}" enabled="true"/>
-						</m:ComboBox>
-						<m:Label text="{i18n>description}"/>
-						<m:Input id="description" value="" change="handleChange" width="60%"/>
+					<m:Label text="{i18n>date}"/>
+					<m:DatePicker id="datade" value="" valueFormat="YYYY-MM-dd" displayFormat="YYYY-MM-dd" placeholder="{i18n>dateFormat}" width="60%"/>
+					<m:Label text="{i18n>start}"/>
+					<m:TimePicker id="startHourPicker" value="" valueFormat="HH:mm" displayFormat="HH:mm" change="handleHourChange" minutesStep="30" valueState="None"
+						placeholder="{i18n>hourFormat}" width="60%"/>
+					<m:Label text="{i18n>end}"/>
+					<m:TimePicker id="endHourPicker" value="" valueFormat="HH:mm" displayFormat="HH:mm" change="handleHourChange" minutesStep="30" valueState="None"
+						placeholder="{i18n>hourFormat}" width="60%"/>
+					<m:Label text="{i18n>hours}"/>
+					<m:Input id="hours" value="" width="60%" enabled="false"/>
+					<m:Label text="{i18n>psp}"/>
+					<m:ComboBox id="pspComboBox" items="{ path: 'psps>/pspsData' }" width="60%">
+						<core:Item key="{psps>pspId}" text="{psps>pspName}" enabled="true"/>
+					</m:ComboBox>
+					<m:Label text="{i18n>description}"/>
+					<m:Input id="description" value="" change="handleChange" width="60%"/>
 				</form:content>
 			</form:SimpleForm>
 			<m:VBox alignItems="Center">
