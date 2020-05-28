@@ -21,10 +21,10 @@
 						</m:MenuButton>
 						<m:OverflowToolbarButton icon="sap-icon://clear-filter" type="Transparent" press=".clearFilter"/>
 						<m:ToolbarSpacer/>
-						<m:Button id="editButton" text="{i18n>editBookingDetailButton}" enabled="false" type="Transparent" press="onMakeEditable"/>
-						<m:Button id="saveButton" text="{i18n>saveBookingDetailButton}" enabled="false" type="Transparent" press="onEdit"/>
+						<m:Button id="editButton" text="{i18n>editBookingDetailButton}" enabled="{bookings>/enable}" type="Transparent" press="onMakeEditable"/>
+						<m:Button id="saveButton" text="{i18n>saveBookingDetailButton}" enabled="{bookings>/enable}" type="Transparent" press="onEdit"/>
 						<m:Button id="createButton" text="{i18n>createBookingDetailButton}" type="Transparent" press="onCreate"/>
-						<m:Button id="deleteButton" text="{i18n>deleteBookingDetailButton}" enabled="false" type="Transparent" press="onDelete"/>
+						<m:Button id="deleteButton" text="{i18n>deleteBookingDetailButton}" enabled="{bookings>/enable}" type="Transparent" press="onDelete"/>
 					</m:Toolbar>
 				</toolbar>
 				<columns>

@@ -3,11 +3,9 @@ sap.ui.define([
 	"../Constants",
 	"sap/f/library",
 	"sap/m/MessageToast",
-	"sap/ui/core/routing/History",
-	"sap/m/MenuItem",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator"
-], function (Controller, Constants, fioriLibrary, MessageToast, History, MenuItem, Filter, FilterOperator) {
+], function (Controller, Constants, fioriLibrary, MessageToast, Filter, FilterOperator) {
 	"use strict";
 
 	return Controller.extend("sap.ui.demo.fiori2.controller.Detail", {
@@ -16,10 +14,12 @@ sap.ui.define([
 
 			this.oRouter = oOwnerComponent.getRouter();
 			this.oModel = oOwnerComponent.getModel();
-			
+
 			this.oRouter.getRoute("detail").attachPatternMatched(this._onUserMatched, this);
 
 			this.oBookingsTable = this.oView.byId("bookingsTable");
+			this.getView().byId("pspComboBox").setValue("");
+			
 		},
 
 		_onUserMatched: function (oEvent) {
@@ -30,9 +30,14 @@ sap.ui.define([
 
 		_getBookingDetails: function () {
 
-			var oModel = new sap.ui.model.json.JSONModel();
+			var oJSONData = {
+				enable: false,
+				enableEdit: false
+			};
+
+			var oModel = new sap.ui.model.json.JSONModel(oJSONData);
 			this.oView = this.getView();
-			
+
 			$.ajax({
 				type: "GET",
 				contentType: false,
@@ -57,23 +62,23 @@ sap.ui.define([
 
 			this.oView.setModel(oModel, "bookings");
 			this._setFilterByMonth();
-			
+
 		},
 
 		_setFilterByMonth: function () {
 			var aYears = [];
 			var oBookings = this.oView.getModel("bookings").getData().bookingData;
 
-			for (var booking_index in oBookings) {
-				var date = new Date(oBookings[booking_index].day);
+			for (var bookingIndex in oBookings) {
+				var date = new Date(oBookings[bookingIndex].day);
 				var month = Constants.MONTH_NAMES[date.getMonth()];
 				var year = date.getFullYear().toString();
 
 				var foundYear = undefined;
 
-				for (var year_index in aYears) {
-					if (aYears[year_index].year === year) {
-						foundYear = aYears[year_index];
+				for (var yearIndex in aYears) {
+					if (aYears[yearIndex].year === year) {
+						foundYear = aYears[yearIndex];
 						break;
 					}
 				}
@@ -81,15 +86,15 @@ sap.ui.define([
 				var isNewMonth = 1;
 
 				if (foundYear !== undefined) {
-					for (var month_index in foundYear.months) {
-						if (foundYear.months[month_index].month === month) {
+					for (var monthIndex in foundYear.months) {
+						if (foundYear.months[monthIndex].month === month) {
 							isNewMonth = 0;
 							break;
 						}
 					}
 
 					if (isNewMonth === 1) {
-						aYears[year_index].months.push({
+						aYears[yearIndex].months.push({
 							month: month
 						});
 					}
@@ -104,8 +109,6 @@ sap.ui.define([
 					});
 				}
 			}
-
-			// console.log(aYears);
 			this.oView.getModel("bookings").setProperty("/filterData", aYears);
 		},
 
@@ -136,26 +139,32 @@ sap.ui.define([
 			var oTable = this.byId("bookingsTable");
 			var aSelectedIndices = oTable.getSelectedIndices();
 			if (aSelectedIndices.length === 0) {
-				this.getView().byId("deleteButton").setEnabled(false);
-				this.getView().byId("editButton").setEnabled(false);
-				this.getView().byId("saveButton").setEnabled(false);
+				this._setButtonsEnable(false);
 				return;
 			}
-			for (var j = 0; j < aSelectedIndices.length; j++) {
+			var chechBooking = false;
+			for (var j in aSelectedIndices) {
 				var bookingDetailPosition = oTable.getContextByIndex(aSelectedIndices[j]).getPath().split("/")[4];
-				if (bookingDetailPosition !== undefined) {
-					this.getView().byId("deleteButton").setEnabled(true);
-					this.getView().byId("editButton").setEnabled(true);
-					this.getView().byId("saveButton").setEnabled(true);
-					return;
-				} else {
-					this.getView().byId("deleteButton").setEnabled(false);
-					this.getView().byId("editButton").setEnabled(false);
-					this.getView().byId("saveButton").setEnabled(false);
-					return;
+				if (bookingDetailPosition === undefined) {
+					chechBooking = true;
 				}
 			}
 
+			if (!chechBooking) {
+				this._setButtonsEnable(true);
+				return;
+			} else {
+				this._setButtonsEnable(false);
+				return;
+			}
+
+		},
+
+		_setButtonsEnable: function (sFlag) {
+			var inputModel = this.getView().getModel("bookings");
+			inputModel.setProperty("/enable", sFlag);
+			inputModel.setProperty("/enable", sFlag);
+			inputModel.setProperty("/enable", sFlag);
 		},
 
 		_deleteBookingDetail: function (idBookingDetail, length) {
@@ -176,18 +185,9 @@ sap.ui.define([
 		onDelete: function (oEvent) {
 			var oTable = this.byId("bookingsTable");
 			var aSelectedIndices = oTable.getSelectedIndices();
-			for (var j = 0; j < aSelectedIndices.length; j++) {
-				var bookingDetailPosition = oTable.getContextByIndex(aSelectedIndices[j]).getPath().split("/")[4];
-				if (bookingDetailPosition === undefined) {
-					var message = this.getView().getModel("i18n").getResourceBundle().getText("detailPageWarningMessage");
-					MessageToast.show(message);
-					return;
-				}
-			}
-
 			var length = aSelectedIndices.length;
 
-			for (var i = 0; i < aSelectedIndices.length; i++) {
+			for (var i in aSelectedIndices) {
 				var bookingDetailPos = oTable.getContextByIndex(aSelectedIndices[i]).getPath().split("/")[4];
 				var bookingPos = oTable.getContextByIndex(aSelectedIndices[i]).getPath().split("/")[2];
 				var booking = this.oView.getModel("bookings").getData().bookingData;
@@ -197,7 +197,7 @@ sap.ui.define([
 		},
 
 		onMakeEditable: function (oEvent) {
-			var oTable = this.getView().byId("bookingsTable");
+		var oTable = this.getView().byId("bookingsTable");
 			var selectedItem = oTable.getSelectedIndex();
 
 			var aItems = oTable.getRows();
@@ -296,51 +296,51 @@ sap.ui.define([
 
 		onMenuAction: function (oEvent) {
 			var oItem = oEvent.getParameter("item");
-			
+
 			// Get month number
 			var iMonthNumber = 0;
-			for(var i = 0; i < 12; i++) {
-				if(Constants.MONTH_NAMES[i] === oItem.getText()) {
+			for (var i = 0; i < 12; i++) {
+				if (Constants.MONTH_NAMES[i] === oItem.getText()) {
 					iMonthNumber = i + 1;
 					break;
 				}
 			}
-			
+
 			// Add month number to path
 			var sItemPath;
-			if(iMonthNumber < 10) {
+			if (iMonthNumber < 10) {
 				sItemPath = "0" + iMonthNumber;
 			} else {
 				sItemPath = iMonthNumber;
 			}
-			
+
 			// Add year to path
 			oItem = oItem.getParent();
-			
+
 			sItemPath = oItem.getText() + "-" + sItemPath;
-			
+
 			this._filterCalendar(sItemPath);
 		},
-		
-		_filterCalendar: function(sItemPath) {
+
+		_filterCalendar: function (sItemPath) {
 			var oTable = this.oView.byId("bookingsTable");
 			var oBinding = oTable.getBinding("rows");
 			var aFilter = [];
-			
+
 			aFilter.push(new Filter({
-					path: "day",
-					operator: FilterOperator.Contains,
-					value1: sItemPath
-				}));
+				path: "day",
+				operator: FilterOperator.Contains,
+				value1: sItemPath
+			}));
 			oBinding.filter(aFilter);
 		},
-		
+
 		clearFilter: function () {
 			var oTable = this.oView.byId("bookingsTable");
 			var oBinding = oTable.getBinding("rows");
-			
+
 			oBinding.filter();
 		}
-		
+
 	});
 });
