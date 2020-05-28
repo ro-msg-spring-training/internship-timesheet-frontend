@@ -275,6 +275,8 @@ sap.ui.define([
 			myformData.append("bookingId", -1);
 			myformData.append("pspId", pspId);
 			myformData.append("userId", this._user);
+			
+			var view = this.getView();
 
 			$.ajax({
 				type: "PUT",
@@ -285,7 +287,8 @@ sap.ui.define([
 				async: false,
 				success: function (data, textStatus, jqXHR) {},
 				error: function (e, xhr, textStatus, err, data) {
-					MessageToast.show("Select a pspName from dropdown of PSP Name, please!");
+					var message = view.getModel("i18n").getResourceBundle().getText("detailPageWarningForHourMessage");
+    				MessageToast.show(message);
 				}
 			}).done(function (data) {
 				this._getBookingDetails();

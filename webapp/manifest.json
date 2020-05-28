@@ -68,7 +68,8 @@
 					"pattern": "master",
 					"name": "master",
 					"target": [
-						"master"
+						"master",
+						"login"
 					]
 				},
 				{
@@ -80,7 +81,7 @@
 					]
 				},
 				{
-					"pattern": "masterDetail",
+					"pattern": "masterDetail/{username}",
 					"name": "masterDetail",
 					"target": [
 						"master",

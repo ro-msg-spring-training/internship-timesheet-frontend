@@ -11,6 +11,9 @@
 				<f:heading>
 					<Title text="{i18n>masterPageTitle}"/>
 				</f:heading>
+				<f:navigationActions>
+					<Button text="{i18n>logoutButton}" press=".onLogout"></Button>
+				</f:navigationActions>
 			</f:DynamicPageTitle>
 		</f:title>
 		

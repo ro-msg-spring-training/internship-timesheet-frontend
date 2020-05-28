@@ -9,7 +9,8 @@ function() {
         PROGRAMS_PATH: "/programs",
         PSPS_PATH:"/psps",
         BOOKING_DETAIL_PATH: "/bookingDetail",
-        LOGIN_PATH: "/login",
+        LOGIN_PATH: "/loginUser",
+        LOGOUT_PATH:"/logout",
         MONTH_NAMES: ["January", "February", "March", "April", "May", "June",
 				"July", "August", "September", "October", "November", "December"
 		]

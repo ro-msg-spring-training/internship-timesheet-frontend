@@ -6,20 +6,37 @@ sap.ui.define([
 	"sap/ui/model/FilterOperator",
 	"sap/ui/model/Sorter",
 	"sap/m/MessageBox",
-	"sap/f/library"
-], function (Constants, JSONModel, Controller, Filter, FilterOperator, Sorter, MessageBox, fioriLibrary) {
+	"sap/f/library",
+	"sap/ui/core/routing/History"
+], 
+function (Constants, JSONModel, Controller, Filter, FilterOperator, Sorter, MessageBox, fioriLibrary, History) {
 	"use strict";
 
 	return Controller.extend("sap.ui.demo.fiori2.controller.Master", {
 		onInit: function () {
+			var oOwnerComponent = this.getOwnerComponent();
+
 			this.oView = this.getView();
 
+			this.oRouter = oOwnerComponent.getRouter();
+
 			var oModel = new sap.ui.model.json.JSONModel();
+
+			var complete_url = window.location.href;
+			var pieces = complete_url.split("?");
+			var params = pieces[1].split("&");
+			var userNameValuePath;
+			$.each(params, function (key, value) {
+				var param_value = value.split("=");
+				userNameValuePath = param_value[1];
+			});
+
+			this._username = userNameValuePath.split("/")[2];
 
 			$.ajax({
 				type: "GET",
 				contentType: false,
-				url: Constants.BASE_URL + Constants.USERS_PATH,
+				url: Constants.BASE_URL + Constants.USERS_PATH + "/" + this._username,
 				dataType: "json",
 				async: false,
 				success: function (data, textStatus, jqXHR) {
@@ -91,6 +108,18 @@ sap.ui.define([
 
 		onSynchronize: function (oEvent) {
 			this.onInit();
+		},
+
+		onLogout: function (oEvent) {
+			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			
+			$.ajax({
+				type: "GET",
+				url: Constants.BASE_URL + Constants.LOGOUT_PATH //Clear SSO cookies: SAP Provided service to do that 
+			}).done(function () {
+				oRouter.navTo("login");
+				window.location.reload();
+			});
 		},
 
 		onPressed: function (oEvent) {
